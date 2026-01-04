@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>12Craft | Minecraft 服务器</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", "PingFang SC", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+}
+
+/* 背景遮罩 */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(2px);
+  z-index: -1;
+}
+
+/* 顶部导航 */
+header {
+  height: 70px;
+  padding: 0 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 26px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.nav a, .nav span {
+  margin-left: 22px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.nav a:hover {
+  text-decoration: underline;
+}
+
+/* 主体 */
+.main {
+  max-width: 1000px;
+  margin: 120px auto 0;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.main h1 {
+  font-size: 56px;
+  margin-bottom: 20px;
+}
+
+.main p {
+  font-size: 18px;
+  opacity: 0.9;
+  margin-bottom: 40px;
+}
+
+/* IP 卡片 */
+.ip-box {
+  display: inline-block;
+  padding: 18px 36px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 14px;
+  font-size: 22px;
+  margin-bottom: 50px;
+}
+
+.ip-box span {
+  display: block;
+  font-size: 14px;
+  opacity: 0.8;
+  margin-bottom: 6px;
+}
+
+/* 特性 */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+  gap: 30px;
+}
+
+.feature {
+  background: rgba(255,255,255,0.1);
+  padding: 30px 20px;
+  border-radius: 16px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">12Craft</div>
+  <div class="nav" id="nav"></div>
+</header>
+
+<section class="main">
+  <h1>欢迎来到 12Craft</h1>
+  <p>一个稳定、纯净、长期运营的 Minecraft 多人生存服务器</p>
+
+  <div class="ip-box">
+    <span>服务器 IP</span>
+    12Craft.club
+  </div>
+
+  <div class="features">
+    <div class="feature">🌍 原版生存 · 长期存档</div>
+    <div class="feature">🧱 建筑 / 红石友好</div>
+    <div class="feature">🤝 文明社区 · 管理在线</div>
+    <div class="feature">⚙ 高性能 · 低延迟</div>
+  </div>
+</section>
+
+<script>
+/* ===== 登录态判断 ===== */
+const nav = document.getElementById("nav");
+const isLogin = localStorage.getItem("isLogin");
+const username = localStorage.getItem("username");
+
+if (isLogin === "true") {
+  nav.innerHTML = `
+    <span>欢迎，${username}</span>
+    <a href="#" onclick="logout()">退出</a>
+  `;
+} else {
+  nav.innerHTML = `
+    <a href="login.html">登录</a>
+    <a href="register.html">注册</a>
+  `;
+}
+
+function logout() {
+  localStorage.clear();
+  window.location.reload();
+}
+
+/* ===== 随机背景 ===== */
+const backgrounds = [
+  "bgs/krm1.jpg",
+  "bgs/miku1.jpg",
+  "bgs/miku2.png"
+];
+document.body.style.backgroundImage =
+  `url(${backgrounds[Math.floor(Math.random() * backgrounds.length)]})`;
+</script>
+
+</body>
+</html>
