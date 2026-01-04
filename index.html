@@ -14,6 +14,9 @@ body {
   margin: 0;
   height: 100vh;
   background: linear-gradient(135deg, #e8d7ff, #a9c9ff);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -32,7 +35,7 @@ body {
 /* 左侧图片 */
 .login-image {
   width: 45%;
-  background: url("kurumi1.webp") center/cover no-repeat;
+  background: url("12logo.jpg") center/cover no-repeat;
 }
 
 /* 右侧表单 */
@@ -126,6 +129,19 @@ body {
 </div>
 
 <script>
+// 随机背景图片列表
+const backgrounds = [
+  "bgs/krm1.jpg",
+  "bgs/miku1.jpg",
+  "bgs/miku2.png"
+];
+
+// 随机选择一张
+const randomBg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+
+// 应用到 body
+document.body.style.backgroundImage = `url(${randomBg})`;
+
 function goLogin() {
   // 登录成功后的占位跳转
   window.location.href = "login.html";
@@ -134,4 +150,3 @@ function goLogin() {
 
 </body>
 </html>
-
