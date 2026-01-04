@@ -11,7 +11,7 @@
   font-family: "Segoe UI", "PingFang SC", sans-serif;
 }
 
-/* ===== 页面基本 ===== */
+/* 页面基础 */
 body {
   scroll-behavior: smooth;
   color: #fff;
@@ -48,40 +48,39 @@ header {
   text-decoration: underline;
 }
 
-/* 分段样式 */
-.section {
-  width: 100%;
+/* 英雄区 */
+#hero {
+  position: relative;
   min-height: 90vh;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   padding: 80px 20px;
-}
-
-.bg-hero {
-  background: url("https://source.unsplash.com/1920x1080/?minecraft") center/cover no-repeat;
+  color: #fff;
+  background-size: cover;
+  background-position: center;
   background-attachment: fixed;
-  position: relative;
+  overflow: hidden;
 }
-.bg-hero::after {
+#hero::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.55);
+  background: rgba(0,0,0,0.45); /* 遮罩 */
+  backdrop-filter: blur(2px);
+  z-index: 0;
 }
-
 .section-content {
   position: relative;
   z-index: 1;
 }
-
-.section h1 {
+#hero h1 {
   font-size: 56px;
   text-shadow: 2px 2px 12px rgba(0,0,0,0.7);
   margin-bottom: 20px;
 }
-.section p {
+#hero p {
   font-size: 18px;
   max-width: 800px;
   margin: auto;
@@ -91,7 +90,7 @@ header {
 /* 按钮 */
 .btn {
   display: inline-block;
-  margin-top: 30px;
+  margin: 15px 10px 0 10px;
   padding: 12px 26px;
   font-size: 18px;
   color: #fff;
@@ -102,9 +101,19 @@ header {
 }
 .btn:hover {
   background: #1a66ff;
+  transform: translateY(-3px);
 }
 
-/* 内容分区 */
+/* 特性区 */
+.section {
+  width: 100%;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 20px;
+}
 #features {
   background: #0a0a0a;
 }
@@ -142,7 +151,8 @@ footer {
   <div class="nav" id="nav"></div>
 </header>
 
-<section class="section bg-hero" id="hero">
+<!-- 英雄区 -->
+<section class="section" id="hero">
   <div class="section-content">
     <h1>欢迎来到 12Craft</h1>
     <p>稳定纯净 | 多人生存 | 官方正版支持 | 社区友好</p>
@@ -161,20 +171,11 @@ footer {
       <div class="card">🤝 文明社区 · 管理在线</div>
       <div class="card">⚙ 高性能 · 低延迟</div>
       <div class="card">🌐 多模式活动服务器</div>
-      <div class="card">🎉 定期社区活动</div>
     </div>
   </div>
 </section>
 
-<!-- 服务器信息 -->
-<section class="section bg-hero" id="server-info">
-  <div class="section-content">
-    <h1>加入服务器</h1>
-    <p>服务器 IP: <strong>12Craft.club</strong></p>
-    <a href="#" class="btn">查看玩法指南</a>
-  </div>
-</section>
-
+<!-- 关于区 -->
 <section class="section" id="about">
   <div class="section-content">
     <h1>关于 12Craft</h1>
@@ -182,7 +183,6 @@ footer {
   </div>
 </section>
 
-<!-- 页脚 -->
 <footer>
   © 2026 12Craft Network · 版权所有
 </footer>
@@ -198,6 +198,20 @@ if (isLogin === "true") {
   nav.innerHTML = `<a href="login.html">登录</a><a href="register.html">注册</a>`;
 }
 function logout() { localStorage.clear(); window.location.reload(); }
+
+/* ===== 英雄区随机背景 ===== */
+const backgrounds = [
+  "bgs/miku1.jpg",
+  "bgs/miku2.png",
+  "bgs/miku3.png",
+  "bgs/miku4.png",
+  "bgs/miku5.jpg",
+  "bgs/miku6.jpg",
+  "bgs/miku7.jpg",
+  "bgs/miku8.jpg"
+];
+const heroSection = document.getElementById("hero");
+heroSection.style.backgroundImage = `url(${backgrounds[Math.floor(Math.random() * backgrounds.length)]})`;
 </script>
 
 </body>
