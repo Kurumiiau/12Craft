@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<title>找回密码</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", "PingFang SC", sans-serif;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-box {
+  width: 720px;
+  height: 360px;
+  background: #f3f6ff;
+  border-radius: 16px;
+  display: flex;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  overflow: hidden;
+}
+
+.login-image {
+  width: 45%;
+  background: url("bgs/12logo.jpg") center/cover no-repeat;
+}
+
+.login-form {
+  width: 55%;
+  padding: 40px;
+}
+
+.login-form h2 {
+  text-align: center;
+  color: #7b7de5;
+  margin-bottom: 40px;
+  letter-spacing: 4px;
+}
+
+.input-group {
+  margin-bottom: 24px;
+}
+
+.input-group input {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid #c6c8ff;
+  background: transparent;
+  padding: 10px 4px;
+  font-size: 16px;
+  outline: none;
+}
+
+.input-group input:focus {
+  border-color: #7b7de5;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #c3a3ff, #9bbcff);
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.login-btn:hover {
+  opacity: 0.9;
+}
+
+.links {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 30px;
+  font-size: 14px;
+}
+
+.links a {
+  color: #8a8cff;
+  text-decoration: none;
+}
+
+.links a:hover {
+  text-decoration: underline;
+}
+</style>
+</head>
+
+<body>
+
+<div class="login-box">
+  <div class="login-image"></div>
+
+  <div class="login-form">
+    <h2>找回密码</h2>
+
+    <div class="input-group">
+      <input type="email" placeholder="输入注册邮箱">
+    </div>
+
+    <button class="login-btn" onclick="goForgot()">发送邮件</button>
+
+    <div class="links">
+      <a href="login.html">返回登录</a>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ===== 随机背景 ===== */
+const backgrounds = [
+  "bgs/krm1.jpg",
+  "bgs/miku1.jpg",
+  "bgs/miku2.png"
+];
+document.body.style.backgroundImage =
+  `url(${backgrounds[Math.floor(Math.random() * backgrounds.length)]})`;
+
+/* ===== 模拟找回密码逻辑 ===== */
+function goForgot() {
+  alert("如果邮箱存在，我们已发送重置密码邮件！");
+}
+</script>
+
+</body>
+</html>
