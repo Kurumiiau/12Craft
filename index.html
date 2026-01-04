@@ -135,6 +135,21 @@ header {
   background: rgba(255,255,255,0.15);
 }
 
+/* 标题背景图 */
+#features h1, #about h1 {
+  font-size: 48px;
+  color: #fff;
+  padding: 40px 20px;
+  border-radius: 12px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+  margin-bottom: 40px;
+}
+#features h1 { background-image: url("bgs/title1.png"); }
+#about h1 { background-image: url("bgs/title2.png"); }
+
 /* 页脚 */
 footer {
   background: #111;
@@ -171,6 +186,7 @@ footer {
       <div class="card">🤝 文明社区 · 管理在线</div>
       <div class="card">⚙ 高性能 · 低延迟</div>
       <div class="card">🌐 多模式活动服务器</div>
+      <div class="card">🎉 定期社区活动</div>
     </div>
   </div>
 </section>
@@ -179,7 +195,7 @@ footer {
 <section class="section" id="about">
   <div class="section-content">
     <h1>关于 12Craft</h1>
-    <p>我们致力于打造一个开放、自由、友好的 Minecraft 生存体验社区，不限制玩法，欢迎所有热爱创造与冒险的玩家加入！</p>
+    <p>我们致力于打造一个开放、自由、友好的 Minecraft 生存体验社区，不限制玩法，支持正版多人联机，欢迎所有热爱创造与冒险的玩家加入！</p>
   </div>
 </section>
 
@@ -216,4 +232,3 @@ heroSection.style.backgroundImage = `url(${backgrounds[Math.floor(Math.random() 
 
 </body>
 </html>
-
