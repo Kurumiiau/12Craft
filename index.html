@@ -2,8 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<title>12Craft | Minecraft 服务器</title>
-
+<title>12Craft | Minecraft 多人生存服务器</title>
 <style>
 * {
   margin: 0;
@@ -12,277 +11,193 @@
   font-family: "Segoe UI", "PingFang SC", sans-serif;
 }
 
+/* ===== 页面基本 ===== */
 body {
-  min-height: 100vh;
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
+  scroll-behavior: smooth;
   color: #fff;
-  overflow: hidden; /* 粒子不要出现滚动条 */
-  position: relative;
+  background: #000;
 }
 
-/* 粒子画布 */
-#particle-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -2;
-}
-
-/* 背景遮罩 */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.45);
-  backdrop-filter: blur(2px);
-  z-index: -1;
-}
-
-/* 顶部导航 */
+/* 固定导航 */
 header {
   position: fixed;
-  top: 0;
   width: 100%;
-  height: 70px;
-  padding: 0 40px;
+  top: 0;
+  left: 0;
+  padding: 15px 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 100;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(8px);
+  z-index: 10;
 }
 
 .logo {
   font-size: 26px;
   font-weight: bold;
-  letter-spacing: 2px;
 }
 
-.nav a, .nav span {
-  margin-left: 22px;
+.nav a {
+  margin-left: 20px;
+  font-size: 15px;
   color: #fff;
   text-decoration: none;
-  font-size: 15px;
 }
-
 .nav a:hover {
   text-decoration: underline;
 }
 
-/* 主体 */
-.main {
-  max-width: 1000px;
-  margin: 180px auto 0;
+/* 分段样式 */
+.section {
+  width: 100%;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  padding: 0 20px;
+  padding: 80px 20px;
+}
+
+.bg-hero {
+  background: url("https://source.unsplash.com/1920x1080/?minecraft") center/cover no-repeat;
+  background-attachment: fixed;
   position: relative;
-  z-index: 10;
+}
+.bg-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
 }
 
-.main h1 {
-  font-size: 60px;
+.section-content {
+  position: relative;
+  z-index: 1;
+}
+
+.section h1 {
+  font-size: 56px;
+  text-shadow: 2px 2px 12px rgba(0,0,0,0.7);
   margin-bottom: 20px;
-  text-shadow: 2px 2px 12px rgba(0,0,0,0.5);
 }
-
-.main p {
-  font-size: 20px;
+.section p {
+  font-size: 18px;
+  max-width: 800px;
+  margin: auto;
   opacity: 0.9;
-  margin-bottom: 50px;
 }
 
-/* IP 卡片 */
-.ip-box {
+/* 按钮 */
+.btn {
   display: inline-block;
-  padding: 20px 40px;
-  background: rgba(255,255,255,0.15);
-  border-radius: 14px;
-  font-size: 22px;
-  margin-bottom: 60px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-  transition: transform 0.3s, box-shadow 0.3s;
-  cursor: pointer;
+  margin-top: 30px;
+  padding: 12px 26px;
+  font-size: 18px;
+  color: #fff;
+  background: #4a9cff;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+.btn:hover {
+  background: #1a66ff;
 }
 
-.ip-box:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+/* 内容分区 */
+#features {
+  background: #0a0a0a;
 }
-
-.ip-box span {
-  display: block;
-  font-size: 14px;
-  opacity: 0.8;
-  margin-bottom: 6px;
-}
-
-/* 特性 */
-.features {
+#features .cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
-  gap: 30px;
-  margin-bottom: 40px;
+  gap: 24px;
+  margin-top: 40px;
 }
-
-.feature {
-  background: rgba(255,255,255,0.12);
-  padding: 30px 20px;
-  border-radius: 16px;
-  transition: transform 0.3s, background 0.3s;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
-}
-
-.feature:hover {
-  transform: translateY(-6px);
-  background: rgba(255,255,255,0.2);
-}
-
-.feature span {
-  display: block;
-  margin-top: 12px;
-  font-size: 14px;
-  opacity: 0.85;
-}
-
-/* QQ群按钮 */
-.qq-group {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 12px 24px;
+.card {
+  background: rgba(255,255,255,0.1);
+  padding: 25px;
   border-radius: 12px;
-  background: linear-gradient(90deg, #4a9cff, #1a66ff);
-  color: #fff;
-  font-size: 16px;
-  text-decoration: none;
-  transition: background 0.3s, transform 0.3s;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  transition: 0.3s;
+}
+.card:hover {
+  transform: translateY(-6px);
+  background: rgba(255,255,255,0.15);
 }
 
-.qq-group:hover {
-  background: linear-gradient(90deg, #1a66ff, #4a9cff);
-  transform: translateY(-4px);
+/* 页脚 */
+footer {
+  background: #111;
+  text-align: center;
+  padding: 24px;
+  font-size: 14px;
 }
 </style>
 </head>
-
 <body>
-
-<!-- 粒子画布 -->
-<canvas id="particle-canvas"></canvas>
 
 <header>
   <div class="logo">12Craft</div>
   <div class="nav" id="nav"></div>
 </header>
 
-<section class="main">
-  <h1>欢迎来到 12Craft</h1>
-  <p>一个稳定、纯净、长期运营的 Minecraft 多人生存服务器</p>
-
-  <div class="ip-box">
-    <span>服务器 IP</span>
-    12Craft.club
+<section class="section bg-hero" id="hero">
+  <div class="section-content">
+    <h1>欢迎来到 12Craft</h1>
+    <p>稳定纯净 | 多人生存 | 官方正版支持 | 社区友好</p>
+    <a href="#features" class="btn">探索特性</a>
+    <a href="tencent://groupwpa/?subcmd=all&param=191174747" class="btn">加入QQ群 191174747</a>
   </div>
-
-  <div class="features">
-    <div class="feature">🌍 原版生存 · 长期存档</div>
-    <div class="feature">🧱 建筑 / 红石友好</div>
-    <div class="feature">🤝 文明社区 · 管理在线</div>
-    <div class="feature">⚙ 高性能 · 低延迟</div>
-  </div>
-
-  <a class="qq-group" href="tencent://groupwpa/?subcmd=all&param=191174747" target="_blank">
-    加入QQ群 191174747
-  </a>
 </section>
 
+<!-- 特性展示 -->
+<section class="section" id="features">
+  <div class="section-content">
+    <h1>我们的特色</h1>
+    <div class="cards">
+      <div class="card">🌍 原版生存 · 长期存档</div>
+      <div class="card">🧱 建筑 / 红石友好</div>
+      <div class="card">🤝 文明社区 · 管理在线</div>
+      <div class="card">⚙ 高性能 · 低延迟</div>
+      <div class="card">🌐 多模式活动服务器</div>
+      <div class="card">🎉 定期社区活动</div>
+    </div>
+  </div>
+</section>
+
+<!-- 服务器信息 -->
+<section class="section bg-hero" id="server-info">
+  <div class="section-content">
+    <h1>加入服务器</h1>
+    <p>服务器 IP: <strong>12Craft.club</strong></p>
+    <a href="#" class="btn">查看玩法指南</a>
+  </div>
+</section>
+
+<section class="section" id="about">
+  <div class="section-content">
+    <h1>关于 12Craft</h1>
+    <p>我们致力于打造一个开放、自由、友好的 Minecraft 生存体验社区，不限制玩法，支持正版多人联机，欢迎所有热爱创造与冒险的玩家加入！</p>
+  </div>
+</section>
+
+<!-- 页脚 -->
+<footer>
+  © 2026 12Craft Network · 版权所有
+</footer>
+
 <script>
-/* ===== 登录态判断 ===== */
+/* ===== 登录状态 ===== */
 const nav = document.getElementById("nav");
 const isLogin = localStorage.getItem("isLogin");
 const username = localStorage.getItem("username");
-
 if (isLogin === "true") {
-  nav.innerHTML = `
-    <span>欢迎，${username}</span>
-    <a href="#" onclick="logout()">退出</a>
-  `;
+  nav.innerHTML = `<span>欢迎，${username}</span><a href="#" onclick="logout()">退出</a>`;
 } else {
-  nav.innerHTML = `
-    <a href="login.html">登录</a>
-    <a href="register.html">注册</a>
-  `;
+  nav.innerHTML = `<a href="login.html">登录</a><a href="register.html">注册</a>`;
 }
-
-function logout() {
-  localStorage.clear();
-  window.location.reload();
-}
-
-/* ===== 随机背景 ===== */
-const backgrounds = [
-  "bgs/krm1.jpg",
-  "bgs/miku1.jpg",
-  "bgs/miku2.png"
-];
-document.body.style.backgroundImage =
-  `url(${backgrounds[Math.floor(Math.random() * backgrounds.length)]})`;
-
-/* ===== 粒子效果 ===== */
-const canvas = document.getElementById("particle-canvas");
-const ctx = canvas.getContext("2d");
-let w = canvas.width = window.innerWidth;
-let h = canvas.height = window.innerHeight;
-
-const particles = [];
-const particleCount = 80;
-
-function random(min,max){return Math.random()*(max-min)+min;}
-
-class Particle {
-  constructor(){
-    this.x = random(0,w);
-    this.y = random(0,h);
-    this.radius = random(1,3);
-    this.vx = random(-0.5,0.5);
-    this.vy = random(-0.5,0.5);
-    this.alpha = random(0.2,0.8);
-  }
-  draw(){
-    ctx.beginPath();
-    ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
-    ctx.fillStyle = `rgba(255,255,255,${this.alpha})`;
-    ctx.fill();
-  }
-  update(){
-    this.x += this.vx;
-    this.y += this.vy;
-    if(this.x<0||this.x>w) this.vx*=-1;
-    if(this.y<0||this.y>h) this.vy*=-1;
-  }
-}
-
-for(let i=0;i<particleCount;i++){
-  particles.push(new Particle());
-}
-
-function animate(){
-  ctx.clearRect(0,0,w,h);
-  for(let p of particles){
-    p.update();
-    p.draw();
-  }
-  requestAnimationFrame(animate);
-}
-
-animate();
-
-window.addEventListener("resize",()=>{
-  w = canvas.width = window.innerWidth;
-  h = canvas.height = window.innerHeight;
-});
+function logout() { localStorage.clear(); window.location.reload(); }
 </script>
 
 </body>
