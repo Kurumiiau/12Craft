@@ -13,7 +13,6 @@
 body {
   margin: 0;
   height: 100vh;
-  background: linear-gradient(135deg, #e8d7ff, #a9c9ff);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -42,7 +41,6 @@ body {
 .login-form {
   width: 55%;
   padding: 40px;
-  position: relative;
 }
 
 .login-form h2 {
@@ -112,7 +110,7 @@ body {
     <h2>登录</h2>
 
     <div class="input-group">
-      <input type="text" placeholder="用户名">
+      <input id="username" type="text" placeholder="用户名">
     </div>
 
     <div class="input-group">
@@ -129,25 +127,28 @@ body {
 </div>
 
 <script>
-// 随机背景图片列表
+/* ===== 随机背景 ===== */
 const backgrounds = [
   "bgs/krm1.jpg",
   "bgs/miku1.jpg",
   "bgs/miku2.png"
 ];
+document.body.style.backgroundImage =
+  `url(${backgrounds[Math.floor(Math.random() * backgrounds.length)]})`;
 
-// 随机选择一张
-const randomBg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
-
-// 应用到 body
-document.body.style.backgroundImage = `url(${randomBg})`;
-
+/* ===== 登录逻辑（前端模拟） ===== */
 function goLogin() {
-  // 登录成功后的占位跳转
-  window.location.href = "login.html";
+  const username =
+    document.getElementById("username").value || "Player";
+
+  // 保存登录态
+  localStorage.setItem("isLogin", "true");
+  localStorage.setItem("username", username);
+
+  // 跳转主站
+  window.location.href = "index.html";
 }
 </script>
 
 </body>
 </html>
-
