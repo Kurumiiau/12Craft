@@ -48,33 +48,38 @@ header {
   text-decoration: underline;
 }
 
-/* 英雄区 */
-#hero {
+/* 公共section样式 */
+.section {
   position: relative;
-  min-height: 90vh;
+  width: 100%;
+  min-height: 80vh;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   padding: 80px 20px;
+  overflow: hidden;
   color: #fff;
+}
+
+/* 背景层 */
+.section-background {
+  position: absolute;
+  inset: 0;
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
-  overflow: hidden;
+  z-index: -1;
+  filter: brightness(0.55); /* 遮罩效果 */
 }
-#hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.45); /* 遮罩 */
-  backdrop-filter: blur(2px);
-  z-index: 0;
-}
+
+/* 内容层 */
 .section-content {
   position: relative;
   z-index: 1;
 }
+
+/* 英雄区文字 */
 #hero h1 {
   font-size: 56px;
   text-shadow: 2px 2px 12px rgba(0,0,0,0.7);
@@ -104,19 +109,7 @@ header {
   transform: translateY(-3px);
 }
 
-/* 特性区 */
-.section {
-  width: 100%;
-  min-height: 80vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 80px 20px;
-}
-#features {
-  background: #0a0a0a;
-}
+/* 卡片区 */
 #features .cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
@@ -134,21 +127,6 @@ header {
   transform: translateY(-6px);
   background: rgba(255,255,255,0.15);
 }
-
-/* 标题背景图 */
-#features h1, #about h1 {
-  font-size: 48px;
-  color: #fff;
-  padding: 40px 20px;
-  border-radius: 12px;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
-  margin-bottom: 40px;
-}
-#features h1 { background-image: url("bgs/title1.png"); }
-#about h1 { background-image: url("bgs/title2.png"); }
 
 /* 页脚 */
 footer {
@@ -168,6 +146,7 @@ footer {
 
 <!-- 英雄区 -->
 <section class="section" id="hero">
+  <div class="section-background"></div>
   <div class="section-content">
     <h1>欢迎来到 12Craft</h1>
     <p>稳定纯净 | 多人生存 | 官方正版支持 | 社区友好</p>
@@ -178,6 +157,7 @@ footer {
 
 <!-- 特性展示 -->
 <section class="section" id="features">
+  <div class="section-background"></div>
   <div class="section-content">
     <h1>我们的特色</h1>
     <div class="cards">
@@ -193,6 +173,7 @@ footer {
 
 <!-- 关于区 -->
 <section class="section" id="about">
+  <div class="section-background"></div>
   <div class="section-content">
     <h1>关于 12Craft</h1>
     <p>我们致力于打造一个开放、自由、友好的 Minecraft 生存体验社区，不限制玩法，支持正版多人联机，欢迎所有热爱创造与冒险的玩家加入！</p>
@@ -204,7 +185,7 @@ footer {
 </footer>
 
 <script>
-/* ===== 登录状态 ===== */
+/* 登录状态 */
 const nav = document.getElementById("nav");
 const isLogin = localStorage.getItem("isLogin");
 const username = localStorage.getItem("username");
@@ -215,8 +196,7 @@ if (isLogin === "true") {
 }
 function logout() { localStorage.clear(); window.location.reload(); }
 
-/* ===== 英雄区随机背景 ===== */
-const backgrounds = [
+const heroBackgrounds = [
   "bgs/miku1.jpg",
   "bgs/miku2.png",
   "bgs/miku3.png",
@@ -226,8 +206,12 @@ const backgrounds = [
   "bgs/miku7.jpg",
   "bgs/miku8.jpg"
 ];
-const heroSection = document.getElementById("hero");
-heroSection.style.backgroundImage = `url(${backgrounds[Math.floor(Math.random() * backgrounds.length)]})`;
+document.querySelector("#hero .section-background").style.backgroundImage =
+  `url(${heroBackgrounds[Math.floor(Math.random() * heroBackgrounds.length)]})`;
+
+/* 特性区和关于区背景 */
+document.querySelector("#features .section-background").style.backgroundImage = "url('bgs/title1.png')";
+document.querySelector("#about .section-background").style.backgroundImage = "url('bgs/title2.png')";
 </script>
 
 </body>
