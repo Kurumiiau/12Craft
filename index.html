@@ -119,7 +119,7 @@ header {
 .carousel {
   display: flex;
   gap: 16px;
-  transition: transform 0.3s ease;
+  transition: transform 0.5s ease-in-out;
 }
 
 .carousel-item {
@@ -163,30 +163,6 @@ header {
   opacity: 1;
   transform: translateY(0);
 }
-
-/* 左右箭头 */
-.carousel-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(0,0,0,0.6);
-  border: none;
-  color: #fff;
-  font-size: 40px;
-  padding: 12px 16px;
-  cursor: pointer;
-  border-radius: 8px;
-  z-index: 20;
-  transition: background 0.3s, transform 0.3s;
-}
-
-.carousel-btn:hover {
-  background: rgba(0,0,0,0.9);
-  transform: translateY(-50%) scale(1.1);
-}
-
-.carousel-btn.prev { left: 10px; }
-.carousel-btn.next { right: 10px; }
 
 /* ================== Lightbox 弹窗 ================== */
 #lightbox {
@@ -275,10 +251,6 @@ footer {
           <div class="caption">长期稳定运营</div>
         </div>
       </div>
-
-      <!-- 左右箭头 -->
-      <button class="carousel-btn prev">&#10094;</button>
-      <button class="carousel-btn next">&#10095;</button>
     </div>
   </div>
 </section>
@@ -332,26 +304,20 @@ document.querySelector("#hero .section-background").style.backgroundImage =
 document.querySelector("#features .section-background").style.backgroundImage = "url('bgs/title1.png')";
 document.querySelector("#about .section-background").style.backgroundImage = "url('bgs/title2.png')";
 
-/* 横向轮播 */
+/* ================== 自动轮播 ================== */
 const carousel = document.querySelector(".carousel");
-const prevBtn = document.querySelector(".carousel-btn.prev");
-const nextBtn = document.querySelector(".carousel-btn.next");
+const items = document.querySelectorAll(".carousel-item");
+let index = 0;
 
-function getCarouselScrollAmount() {
-  const item = document.querySelector(".carousel-item");
-  const style = window.getComputedStyle(item);
-  const width = item.offsetWidth + parseInt(style.marginRight);
-  return width;
+function autoScrollCarousel() {
+  index = (index + 1) % items.length;
+  const scrollAmount = items[0].offsetWidth + parseInt(getComputedStyle(items[0]).marginRight);
+  carousel.scrollTo({ left: scrollAmount * index, behavior: "smooth" });
 }
 
-prevBtn.addEventListener("click", () => {
-  carousel.scrollBy({ left: -getCarouselScrollAmount(), behavior: "smooth" });
-});
-nextBtn.addEventListener("click", () => {
-  carousel.scrollBy({ left: getCarouselScrollAmount(), behavior: "smooth" });
-});
+setInterval(autoScrollCarousel, 3000); // 每3秒切换一张
 
-/* Lightbox 弹窗 */
+/* ================== Lightbox 弹窗 ================== */
 const lightbox = document.getElementById("lightbox");
 const lightboxImg = document.getElementById("lightbox-img");
 
