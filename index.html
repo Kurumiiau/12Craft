@@ -126,14 +126,15 @@ header {
 
 .carousel-item {
   position: relative;
-  flex: 0 0 auto; /* 固定宽度不收缩 */
-  width: 800px;
+  flex: 0 0 auto;
+  width: clamp(250px, 30vw, 600px); /* 最小250px，最大450px，根据屏幕宽度自适应 */
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
   box-shadow: 0 8px 24px rgba(0,0,0,0.5);
   transition: transform 0.3s, box-shadow 0.3s;
 }
+
 
 .carousel-item img {
   width: 100%;
@@ -308,7 +309,7 @@ footer {
 
 <!-- ================== JS ================== -->
 <script>
-/* 登录状态 */
+/* ================== 登录状态 ================== */
 const nav = document.getElementById("nav");
 const isLogin = localStorage.getItem("isLogin");
 const username = localStorage.getItem("username");
@@ -317,9 +318,12 @@ if (isLogin === "true") {
 } else {
   nav.innerHTML = `<a href="login.html">登录</a><a href="register.html">注册</a>`;
 }
-function logout() { localStorage.clear(); window.location.reload(); }
+function logout() {
+  localStorage.clear();
+  window.location.reload();
+}
 
-/* 英雄区背景随机 */
+/* ================== 英雄区背景随机 ================== */
 const heroBackgrounds = [
   "bgs/miku1.jpg",
   "bgs/miku2.png",
@@ -333,24 +337,33 @@ const heroBackgrounds = [
 document.querySelector("#hero .section-background").style.backgroundImage =
   `url(${heroBackgrounds[Math.floor(Math.random() * heroBackgrounds.length)]})`;
 
-/* 特性区和关于区背景 */
+/* ================== 特性区和关于区背景 ================== */
 document.querySelector("#features .section-background").style.backgroundImage = "url('bgs/title1.png')";
 document.querySelector("#about .section-background").style.backgroundImage = "url('bgs/title2.png')";
 
-/* ================== 横向轮播按钮 ================== */
+/* ================== 横向轮播 ================== */
 const carousel = document.querySelector(".carousel");
 const prevBtn = document.querySelector(".carousel-btn.prev");
 const nextBtn = document.querySelector(".carousel-btn.next");
 
+/* 动态计算每次滚动宽度 */
+function getCarouselScrollAmount() {
+  const item = document.querySelector(".carousel-item");
+  const style = window.getComputedStyle(item);
+  const width = item.offsetWidth + parseInt(style.marginRight); // 包含右间距
+  return width;
+}
+
+/* 左右按钮事件 */
 prevBtn.addEventListener("click", () => {
-  carousel.scrollBy({ left: -320, behavior: "smooth" });
+  carousel.scrollBy({ left: -getCarouselScrollAmount(), behavior: "smooth" });
 });
 
 nextBtn.addEventListener("click", () => {
-  carousel.scrollBy({ left: 320, behavior: "smooth" });
+  carousel.scrollBy({ left: getCarouselScrollAmount(), behavior: "smooth" });
 });
 
-/* ================== Lightbox ================== */
+/* ================== Lightbox 弹窗 ================== */
 const lightbox = document.getElementById("lightbox");
 const lightboxImg = document.getElementById("lightbox-img");
 
@@ -358,16 +371,16 @@ document.querySelectorAll(".carousel-item img").forEach(img => {
   img.addEventListener("click", () => {
     lightbox.style.display = "flex";
     lightboxImg.src = img.src;
-    setTimeout(()=>lightboxImg.classList.add("show"), 10);
+    setTimeout(() => lightboxImg.classList.add("show"), 10);
   });
 });
 
 lightbox.addEventListener("click", () => {
   lightboxImg.classList.remove("show");
-  setTimeout(()=>lightbox.style.display = "none",300);
+  setTimeout(() => lightbox.style.display = "none", 300);
 });
 </script>
 
+
 </body>
 </html>
-
