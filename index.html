@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>12Craft | Minecraft 多人生存服务器</title>
+
 <style>
 /* ================== 全局样式 ================== */
 * {
@@ -12,19 +13,18 @@
   font-family: "Segoe UI", "PingFang SC", sans-serif;
 }
 
-/* 页面基础 */
 body {
   scroll-behavior: smooth;
   color: #fff;
   background: #000;
 }
 
-/* 固定导航 */
+/* ================== 导航 ================== */
 header {
   position: fixed;
-  width: 100%;
   top: 0;
   left: 0;
+  width: 100%;
   padding: 15px 40px;
   display: flex;
   justify-content: space-between;
@@ -45,14 +45,10 @@ header {
   color: #fff;
   text-decoration: none;
 }
-.nav a:hover {
-  text-decoration: underline;
-}
 
-/* ================== section 公共样式 ================== */
+/* ================== section ================== */
 .section {
   position: relative;
-  width: 100%;
   min-height: 80vh;
   display: flex;
   align-items: center;
@@ -60,43 +56,39 @@ header {
   text-align: center;
   padding: 80px 20px;
   overflow: hidden;
-  color: #fff;
 }
 
-/* 背景层 */
 .section-background {
   position: absolute;
   inset: 0;
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
+  filter: brightness(0.55);
   z-index: -1;
-  filter: brightness(0.55); /* 遮罩效果 */
 }
 
-/* 内容层 */
 .section-content {
   position: relative;
   z-index: 1;
 }
 
-/* 英雄区文字 */
+/* ================== Hero ================== */
 #hero h1 {
   font-size: 56px;
-  text-shadow: 2px 2px 12px rgba(0,0,0,0.7);
   margin-bottom: 20px;
+  text-shadow: 0 6px 20px rgba(0,0,0,0.8);
 }
+
 #hero p {
   font-size: 18px;
-  max-width: 800px;
-  margin: auto;
   opacity: 0.9;
 }
 
-/* 按钮 */
+/* ================== 按钮 ================== */
 .btn {
   display: inline-block;
-  margin: 15px 10px 0 10px;
+  margin: 15px 10px 0;
   padding: 12px 26px;
   font-size: 18px;
   color: #fff;
@@ -105,69 +97,66 @@ header {
   text-decoration: none;
   transition: 0.3s;
 }
+
 .btn:hover {
   background: #1a66ff;
   transform: translateY(-3px);
 }
 
-/* ================== 横向滑动画廊 ================== */
+/* ================== 放大轮播 ================== */
 .carousel-container {
   position: relative;
-  overflow: hidden;
   width: 100%;
-  margin-top: 40px;
+  max-width: 1200px;
+  margin: 60px auto 0;
+  overflow: hidden;
 }
 
 .carousel {
   display: flex;
-  gap: 16px;
-  transition: transform 0.3s ease;
+  gap: 40px;
+  padding: 40px 0;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
 }
 
 .carousel-item {
+  flex: 0 0 80%;
+  max-width: 80%;
   position: relative;
-  flex: 0 0 auto; /* 固定宽度不收缩 */
-  width: 300px;
-  border-radius: 12px;
+  border-radius: 18px;
   overflow: hidden;
-  cursor: pointer;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+  transition: transform 0.4s ease;
+}
+
+.carousel-item:hover {
+  transform: scale(1.03);
 }
 
 .carousel-item img {
   width: 100%;
+  height: 480px;
+  object-fit: cover;
   display: block;
-  transition: transform 0.3s;
 }
 
-.carousel-item:hover {
-  transform: scale(1.05);
-  box-shadow: 0 12px 36px rgba(0,0,0,0.6);
-}
-
-/* 悬停文字 */
+/* 字幕 */
 .caption {
   position: absolute;
   bottom: 0;
-  left: 0;
   width: 100%;
-  padding: 8px;
-  background: rgba(0,0,0,0.6);
-  color: #fff;
+  padding: 14px 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.75), transparent);
   text-align: center;
-  font-size: 14px;
-  opacity: 0;
-  transform: translateY(100%);
-  transition: opacity 0.3s, transform 0.3s;
+  font-size: 16px;
 }
 
-.carousel-item:hover .caption {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* 左右箭头 */
+/* 箭头 */
 .carousel-btn {
   position: absolute;
   top: 50%;
@@ -175,119 +164,66 @@ header {
   background: rgba(0,0,0,0.6);
   border: none;
   color: #fff;
-  font-size: 32px;
-  padding: 8px 12px;
+  font-size: 36px;
+  padding: 8px 14px;
   cursor: pointer;
-  border-radius: 8px;
+  border-radius: 10px;
   z-index: 10;
-  transition: background 0.3s;
 }
 
-.carousel-btn:hover {
-  background: rgba(0,0,0,0.9);
-}
+.carousel-btn.prev { left: 10px; }
+.carousel-btn.next { right: 10px; }
 
-.carousel-btn.prev { left: 8px; }
-.carousel-btn.next { right: 8px; }
-
-/* ================== Lightbox 弹窗 ================== */
-#lightbox {
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.85);
-  justify-content:center;
-  align-items:center;
-  z-index:1000;
-  cursor:pointer;
-}
-
-#lightbox-img {
-  max-width:90%;
-  max-height:90%;
-  border-radius:12px;
-  box-shadow:0 12px 36px rgba(0,0,0,0.7);
-  transition: transform 0.3s;
-}
-
-#lightbox.show {
-  display: flex;
-  animation: fadeIn 0.3s ease;
-}
-
-#lightbox-img.show {
-  transform: scale(1);
-}
-
-@keyframes fadeIn {
-  from {opacity:0;}
-  to {opacity:1;}
-}
-
-/* ================== 页脚 ================== */
+/* ================== Footer ================== */
 footer {
   background: #111;
+  padding: 30px;
   text-align: center;
-  padding: 24px;
   font-size: 14px;
 }
 </style>
 </head>
+
 <body>
 
-<!-- ================== 导航 ================== -->
 <header>
   <div class="logo">12Craft</div>
   <div class="nav" id="nav"></div>
 </header>
 
-<!-- ================== 英雄区 ================== -->
 <section class="section" id="hero">
   <div class="section-background"></div>
   <div class="section-content">
     <h1>欢迎来到 12Craft</h1>
-    <p>稳定纯净 | 多人生存 | 多样玩法 | 社区友好</p>
-    <a href="#features" class="btn">探索玩法</a>
+    <p>服务器 IP：<b>12Craft.club</b></p>
+    <a class="btn" href="#features">探索玩法</a>
     <a href="tencent://groupwpa/?subcmd=all&param=191174747" class="btn">加入QQ群 191174747</a>
   </div>
 </section>
 
-<!-- ================== 图片展览区（横向滑动） ================== -->
 <section class="section" id="features">
   <div class="section-background"></div>
   <div class="section-content">
     <h1>特色玩法</h1>
-    <div class="carousel-container">
-      <div class="carousel">
-        <div class="carousel-item">
-          <img src="bgs/I-mg1.png">
-          <div class="caption">沉浸式冒险体验</div>
-        </div>
-        <div class="carousel-item">
-          <img src="bgs/I-mg2.png">
-          <div class="caption">宏大的自然生成</div>
-        </div>
-        <div class="carousel-item">
-          <img src="bgs/I-season.png">
-          <div class="caption">让四季在你的世界流转</div>
-        </div>
-        <div class="carousel-item">
-          <img src="bgs/miku3.png">
-          <div class="caption">社区友好</div>
-        </div>
-        <div class="carousel-item">
-          <img src="bgs/miku8.jpg">
-          <div class="caption">长期稳定运营</div>
-        </div>
-      </div>
-      <!-- 左右箭头 -->
+
+    <div class="carousel-container" id="carouselBox">
       <button class="carousel-btn prev">&#10094;</button>
+
+      <div class="carousel" id="carousel">
+          <div class="carousel-item"><img src="bgs/miku3.png"><div class="caption">长期稳定运营</div></div>
+          <div class="carousel-item"><img src="bgs/I-mg1.png"><div class="caption">沉浸式冒险体验</div></div>
+          <div class="carousel-item"><img src="bgs/I-mg2.png"><div class="caption">宏大的自然生成</div></div>
+          <div class="carousel-item"><img src="bgs/I-season.png"><div class="caption">让四季在你的世界流转</div></div>
+          <div class="carousel-item"><img src="bgs/miku3.png"><div class="caption">社区友好</div></div>
+          <div class="carousel-item"><img src="bgs/miku8.jpg"><div class="caption">长期稳定运营</div></div>
+          <div class="carousel-item"><img src="bgs/miku7.jpg"><div class="caption">长期稳定运营</div></div>
+      </div>
+
       <button class="carousel-btn next">&#10095;</button>
     </div>
   </div>
 </section>
 
-<!-- ================== 关于区 ================== -->
 <section class="section" id="about">
   <div class="section-background"></div>
   <div class="section-content">
@@ -296,76 +232,61 @@ footer {
   </div>
 </section>
 
-<!-- ================== 页脚 ================== -->
-<footer>
-  © 2016-2026 12Craft Network · CopyRight
-</footer>
+<footer>© 2016–2026 12Craft Network</footer>
 
-<!-- ================== Lightbox 弹窗 ================== -->
-<div id="lightbox">
-  <img id="lightbox-img" src="">
-</div>
-
-<!-- ================== JS ================== -->
 <script>
-/* 登录状态 */
+/* 顶部登录状态 */
 const nav = document.getElementById("nav");
-const isLogin = localStorage.getItem("isLogin");
-const username = localStorage.getItem("username");
-if (isLogin === "true") {
-  nav.innerHTML = `<span>欢迎，${username}</span><a href="#" onclick="logout()">退出</a>`;
+if (localStorage.getItem("isLogin") === "true") {
+  nav.innerHTML = `<span>欢迎，${localStorage.getItem("username")}</span>
+  <a href="#" onclick="localStorage.clear();location.reload()">退出</a>`;
 } else {
   nav.innerHTML = `<a href="login.html">登录</a><a href="register.html">注册</a>`;
 }
-function logout() { localStorage.clear(); window.location.reload(); }
 
-/* 英雄区背景随机 */
-const heroBackgrounds = [
-  "bgs/miku1.jpg",
-  "bgs/miku2.png",
-  "bgs/miku3.png",
-  "bgs/miku4.png",
-  "bgs/miku5.jpg",
-  "bgs/miku6.jpg",
-  "bgs/miku7.jpg",
-  "bgs/miku8.jpg"
+/* Hero 背景随机 */
+const heroBgs = [
+  "bgs/miku1.jpg","bgs/miku2.png","bgs/miku3.png","bgs/miku4.png"
 ];
 document.querySelector("#hero .section-background").style.backgroundImage =
-  `url(${heroBackgrounds[Math.floor(Math.random() * heroBackgrounds.length)]})`;
+  `url(${heroBgs[Math.floor(Math.random()*heroBgs.length)]})`;
 
-/* 特性区和关于区背景 */
-document.querySelector("#features .section-background").style.backgroundImage = "url('bgs/title1.png')";
-document.querySelector("#about .section-background").style.backgroundImage = "url('bgs/title2.png')";
+/* 轮播逻辑（自动 + 手动） */
+const carousel = document.getElementById("carousel");
+const prev = document.querySelector(".prev");
+const next = document.querySelector(".next");
+const box = document.getElementById("carouselBox");
 
-/* ================== 横向轮播按钮 ================== */
-const carousel = document.querySelector(".carousel");
-const prevBtn = document.querySelector(".carousel-btn.prev");
-const nextBtn = document.querySelector(".carousel-btn.next");
+let autoTimer;
 
-prevBtn.addEventListener("click", () => {
-  carousel.scrollBy({ left: -320, behavior: "smooth" });
-});
+function scrollNext() {
+  carousel.scrollBy({ left: carousel.clientWidth, behavior: "smooth" });
+}
 
-nextBtn.addEventListener("click", () => {
-  carousel.scrollBy({ left: 320, behavior: "smooth" });
-});
+function startAuto() {
+  autoTimer = setInterval(scrollNext, 4000);
+}
 
-/* ================== Lightbox ================== */
-const lightbox = document.getElementById("lightbox");
-const lightboxImg = document.getElementById("lightbox-img");
+function stopAuto() {
+  clearInterval(autoTimer);
+}
 
-document.querySelectorAll(".carousel-item img").forEach(img => {
-  img.addEventListener("click", () => {
-    lightbox.style.display = "flex";
-    lightboxImg.src = img.src;
-    setTimeout(()=>lightboxImg.classList.add("show"), 10);
-  });
-});
+prev.onclick = () => {
+  stopAuto();
+  carousel.scrollBy({ left: -carousel.clientWidth, behavior: "smooth" });
+  startAuto();
+};
 
-lightbox.addEventListener("click", () => {
-  lightboxImg.classList.remove("show");
-  setTimeout(()=>lightbox.style.display = "none",300);
-});
+next.onclick = () => {
+  stopAuto();
+  scrollNext();
+  startAuto();
+};
+
+box.addEventListener("mouseenter", stopAuto);
+box.addEventListener("mouseleave", startAuto);
+
+startAuto();
 </script>
 
 </body>
