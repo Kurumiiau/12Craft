@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>12Craft | Minecraft 多人生存服务器</title>
 <style>
+/* ================== 全局样式 ================== */
 * {
   margin: 0;
   padding: 0;
@@ -38,7 +39,7 @@ header {
   font-weight: bold;
 }
 
-.nav a {
+.nav a, .nav span {
   margin-left: 20px;
   font-size: 15px;
   color: #fff;
@@ -48,7 +49,7 @@ header {
   text-decoration: underline;
 }
 
-/* 公共section样式 */
+/* ================== section 公共样式 ================== */
 .section {
   position: relative;
   width: 100%;
@@ -109,26 +110,121 @@ header {
   transform: translateY(-3px);
 }
 
-/* 卡片区 */
-#features .cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
-  gap: 24px;
+/* ================== 横向滑动画廊 ================== */
+.carousel-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
   margin-top: 40px;
 }
-.card {
-  background: rgba(255,255,255,0.1);
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-  transition: 0.3s;
-}
-.card:hover {
-  transform: translateY(-6px);
-  background: rgba(255,255,255,0.15);
+
+.carousel {
+  display: flex;
+  gap: 16px;
+  transition: transform 0.3s ease;
 }
 
-/* 页脚 */
+.carousel-item {
+  position: relative;
+  flex: 0 0 auto; /* 固定宽度不收缩 */
+  width: 300px;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.carousel-item img {
+  width: 100%;
+  display: block;
+  transition: transform 0.3s;
+}
+
+.carousel-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.6);
+}
+
+/* 悬停文字 */
+.caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 8px;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  text-align: center;
+  font-size: 14px;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.carousel-item:hover .caption {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 左右箭头 */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.6);
+  border: none;
+  color: #fff;
+  font-size: 32px;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 8px;
+  z-index: 10;
+  transition: background 0.3s;
+}
+
+.carousel-btn:hover {
+  background: rgba(0,0,0,0.9);
+}
+
+.carousel-btn.prev { left: 8px; }
+.carousel-btn.next { right: 8px; }
+
+/* ================== Lightbox 弹窗 ================== */
+#lightbox {
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.85);
+  justify-content:center;
+  align-items:center;
+  z-index:1000;
+  cursor:pointer;
+}
+
+#lightbox-img {
+  max-width:90%;
+  max-height:90%;
+  border-radius:12px;
+  box-shadow:0 12px 36px rgba(0,0,0,0.7);
+  transition: transform 0.3s;
+}
+
+#lightbox.show {
+  display: flex;
+  animation: fadeIn 0.3s ease;
+}
+
+#lightbox-img.show {
+  transform: scale(1);
+}
+
+@keyframes fadeIn {
+  from {opacity:0;}
+  to {opacity:1;}
+}
+
+/* ================== 页脚 ================== */
 footer {
   background: #111;
   text-align: center;
@@ -139,12 +235,13 @@ footer {
 </head>
 <body>
 
+<!-- ================== 导航 ================== -->
 <header>
   <div class="logo">12Craft</div>
   <div class="nav" id="nav"></div>
 </header>
 
-<!-- 英雄区 -->
+<!-- ================== 英雄区 ================== -->
 <section class="section" id="hero">
   <div class="section-background"></div>
   <div class="section-content">
@@ -155,23 +252,42 @@ footer {
   </div>
 </section>
 
-<!-- 特性展示 -->
+<!-- ================== 图片展览区（横向滑动） ================== -->
 <section class="section" id="features">
   <div class="section-background"></div>
   <div class="section-content">
-    <h1>我们的特色</h1>
-    <div class="cards">
-      <div class="card">🌍 原版生存 · 长期存档</div>
-      <div class="card">🧱 建筑 / 红石友好</div>
-      <div class="card">🤝 文明社区 · 管理在线</div>
-      <div class="card">⚙ 高性能 · 低延迟</div>
-      <div class="card">🌐 多模式活动服务器</div>
-      <div class="card">🎉 定期社区活动</div>
+    <h1>我们的团队与社区活动</h1>
+    <div class="carousel-container">
+      <div class="carousel">
+        <div class="carousel-item">
+          <img src="https://via.placeholder.com/300x200?text=Image+1" alt="Image 1">
+          <div class="caption">占位文字说明 1</div>
+        </div>
+        <div class="carousel-item">
+          <img src="https://via.placeholder.com/300x200?text=Image+2" alt="Image 2">
+          <div class="caption">占位文字说明 2</div>
+        </div>
+        <div class="carousel-item">
+          <img src="https://via.placeholder.com/300x200?text=Image+3" alt="Image 3">
+          <div class="caption">占位文字说明 3</div>
+        </div>
+        <div class="carousel-item">
+          <img src="https://via.placeholder.com/300x200?text=Image+4" alt="Image 4">
+          <div class="caption">占位文字说明 4</div>
+        </div>
+        <div class="carousel-item">
+          <img src="https://via.placeholder.com/300x200?text=Image+5" alt="Image 5">
+          <div class="caption">占位文字说明 5</div>
+        </div>
+      </div>
+      <!-- 左右箭头 -->
+      <button class="carousel-btn prev">&#10094;</button>
+      <button class="carousel-btn next">&#10095;</button>
     </div>
   </div>
 </section>
 
-<!-- 关于区 -->
+<!-- ================== 关于区 ================== -->
 <section class="section" id="about">
   <div class="section-background"></div>
   <div class="section-content">
@@ -180,10 +296,17 @@ footer {
   </div>
 </section>
 
+<!-- ================== 页脚 ================== -->
 <footer>
   © 2026 12Craft Network · 版权所有
 </footer>
 
+<!-- ================== Lightbox 弹窗 ================== -->
+<div id="lightbox">
+  <img id="lightbox-img" src="">
+</div>
+
+<!-- ================== JS ================== -->
 <script>
 /* 登录状态 */
 const nav = document.getElementById("nav");
@@ -196,6 +319,7 @@ if (isLogin === "true") {
 }
 function logout() { localStorage.clear(); window.location.reload(); }
 
+/* 英雄区背景随机 */
 const heroBackgrounds = [
   "bgs/miku1.jpg",
   "bgs/miku2.png",
@@ -212,6 +336,36 @@ document.querySelector("#hero .section-background").style.backgroundImage =
 /* 特性区和关于区背景 */
 document.querySelector("#features .section-background").style.backgroundImage = "url('bgs/title1.png')";
 document.querySelector("#about .section-background").style.backgroundImage = "url('bgs/title2.png')";
+
+/* ================== 横向轮播按钮 ================== */
+const carousel = document.querySelector(".carousel");
+const prevBtn = document.querySelector(".carousel-btn.prev");
+const nextBtn = document.querySelector(".carousel-btn.next");
+
+prevBtn.addEventListener("click", () => {
+  carousel.scrollBy({ left: -320, behavior: "smooth" });
+});
+
+nextBtn.addEventListener("click", () => {
+  carousel.scrollBy({ left: 320, behavior: "smooth" });
+});
+
+/* ================== Lightbox ================== */
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightbox-img");
+
+document.querySelectorAll(".carousel-item img").forEach(img => {
+  img.addEventListener("click", () => {
+    lightbox.style.display = "flex";
+    lightboxImg.src = img.src;
+    setTimeout(()=>lightboxImg.classList.add("show"), 10);
+  });
+});
+
+lightbox.addEventListener("click", () => {
+  lightboxImg.classList.remove("show");
+  setTimeout(()=>lightbox.style.display = "none",300);
+});
 </script>
 
 </body>
