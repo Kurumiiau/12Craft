@@ -32,18 +32,13 @@ header{
   z-index:10;
 }
 
-.logo{
-  font-size:26px;
-  font-weight:bold;
-}
-
+.logo{font-size:26px;font-weight:bold;}
 .nav a,.nav span{
   margin-left:20px;
   color:#fff;
   text-decoration:none;
   font-size:15px;
 }
-.nav a:hover{text-decoration:underline;}
 
 /* ================== section ================== */
 .section{
@@ -66,22 +61,13 @@ header{
   z-index:-1;
 }
 
-.section-content{
-  max-width:1200px;
-  width:100%;
-}
-
 /* ================== Hero ================== */
 #hero h1{
   font-size:56px;
   margin-bottom:20px;
   text-shadow:0 6px 20px rgba(0,0,0,0.8);
 }
-
-#hero p{
-  font-size:18px;
-  opacity:0.9;
-}
+#hero p{font-size:18px;opacity:.9;}
 
 .btn{
   display:inline-block;
@@ -94,34 +80,29 @@ header{
   text-decoration:none;
   transition:.3s;
 }
-.btn:hover{
-  background:#1a66ff;
-  transform:translateY(-4px);
-}
+.btn:hover{background:#1a66ff;transform:translateY(-4px);}
 
-/* ================== 舞台式轮播 ================== */
+/* ================== 舞台轮播（修正版） ================== */
 .carousel-container{
   position:relative;
-  width:100vw;
+  width:100%;
+  max-width:1400px;
+  margin:40px auto 0;
   overflow:hidden;
   perspective:1200px;
-  margin-top:40px;
 }
 
 .carousel{
+  position:relative;
   display:flex;
   justify-content:center;
   align-items:center;
-  width:200vw;
-  margin-left:-50vw;
 }
 
 .carousel-item{
-  flex:0 0 auto;
-  margin:0 20px;
-  transition:transform .6s ease,opacity .6s ease;
+  position:absolute;
+  transition:transform .6s ease, opacity .6s ease;
   cursor:pointer;
-  position:relative;
 }
 
 .carousel-item img{
@@ -131,25 +112,25 @@ header{
   box-shadow:0 20px 50px rgba(0,0,0,0.6);
 }
 
-/* 舞台位置 */
+/* 舞台位置（核心） */
 .carousel-item.center{
-  transform:scale(1.25);
+  transform:translateX(0) scale(1.25);
   z-index:3;
 }
 
 .carousel-item.left{
-  transform:scale(0.85) translateX(-420px) rotateY(15deg);
-  opacity:0.6;
+  transform:translateX(-520px) scale(.85) rotateY(18deg);
+  opacity:.6;
   z-index:1;
 }
 
 .carousel-item.right{
-  transform:scale(0.85) translateX(420px) rotateY(-15deg);
-  opacity:0.6;
+  transform:translateX(520px) scale(.85) rotateY(-18deg);
+  opacity:.6;
   z-index:1;
 }
 
-/* 描述文字 */
+/* 说明文字 */
 .caption{
   position:absolute;
   bottom:0;
@@ -167,7 +148,7 @@ header{
   transform:translateY(0);
 }
 
-/* 箭头 */
+/* 箭头（不会再消失） */
 .carousel-btn{
   position:absolute;
   top:50%;
@@ -179,27 +160,10 @@ header{
   padding:8px 14px;
   cursor:pointer;
   border-radius:10px;
-  z-index:10;
+  z-index:20;
 }
-.carousel-btn:hover{background:rgba(0,0,0,0.9);}
 .carousel-btn.prev{left:10px;}
 .carousel-btn.next{right:10px;}
-
-/* ================== Lightbox ================== */
-#lightbox{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.85);
-  justify-content:center;
-  align-items:center;
-  z-index:999;
-}
-#lightbox img{
-  max-width:90%;
-  max-height:90%;
-  border-radius:18px;
-}
 
 /* ================== Footer ================== */
 footer{
@@ -218,10 +182,9 @@ footer{
   <div class="nav" id="nav"></div>
 </header>
 
-<!-- Hero -->
 <section class="section" id="hero">
   <div class="section-background"></div>
-  <div class="section-content">
+  <div>
     <h1>欢迎来到 12Craft</h1>
     <p>服务器 IP：<b>12Craft.club</b></p>
     <a class="btn" href="#features">探索服务器</a>
@@ -229,50 +192,28 @@ footer{
   </div>
 </section>
 
-<!-- Features -->
 <section class="section" id="features">
   <div class="section-background"></div>
-  <div class="section-content">
+  <div>
     <h1>服务器特色</h1>
 
     <div class="carousel-container">
       <button class="carousel-btn prev">&#10094;</button>
       <div class="carousel">
-        <div class="carousel-item">
-          <img src="bgs/I-mg1.png">
-          <div class="caption">宏大的自然生成</div>
-        </div>
-        <div class="carousel-item">
-          <img src="bgs/I-mg2.png">
-          <div class="caption">沉浸式冒险体验</div>
-        </div>
-        <div class="carousel-item">
-          <img src="bgs/I-season.png">
-          <div class="caption">让四季在你的 Minecraft 世界中流转</div>
-        </div>
-        <div class="carousel-item">
-          <img src="bgs/miku3.png">
-          <div class="caption">社区友好</div>
-        </div>
-        <div class="carousel-item">
-          <img src="bgs/miku8.jpg">
-          <div class="caption">长期稳定运营</div>
-        </div>
+        <div class="carousel-item"><img src="bgs/I-mg1.png"><div class="caption">沉浸式冒险体验</div></div>
+        <div class="carousel-item"><img src="bgs/I-mg2.png"><div class="caption">宏大的自然生成</div></div>
+        <div class="carousel-item"><img src="bgs/I-season.png"><div class="caption">让四季在你的 Minecraft 世界中流转</div></div>
+        <div class="carousel-item"><img src="bgs/miku3.png"><div class="caption">社区友好</div></div>
+        <div class="carousel-item"><img src="bgs/miku8.jpg"><div class="caption">长期稳定运营</div></div>
       </div>
       <button class="carousel-btn next">&#10095;</button>
     </div>
   </div>
 </section>
 
-<footer>
-  © 2016–2026 12Craft Network
-</footer>
-
-<!-- Lightbox -->
-<div id="lightbox"><img></div>
+<footer>© 2016–2026 12Craft Network</footer>
 
 <script>
-/* 登录状态 */
 const nav=document.getElementById("nav");
 if(localStorage.getItem("isLogin")==="true"){
   nav.innerHTML=`<span>欢迎，${localStorage.getItem("username")}</span>
@@ -285,12 +226,10 @@ if(localStorage.getItem("isLogin")==="true"){
 const bgs=["bgs/miku1.jpg","bgs/miku2.png","bgs/miku3.png","bgs/miku4.png"];
 document.querySelector("#hero .section-background").style.backgroundImage=
 `url(${bgs[Math.floor(Math.random()*bgs.length)]})`;
-document.querySelector("#features .section-background").style.backgroundImage=
-`url(bgs/title1.png)`;
 
-/* 轮播逻辑 */
+/* 轮播逻辑（第三张严格居中） */
 const items=[...document.querySelectorAll(".carousel-item")];
-let centerIndex=Math.floor(items.length/2);
+let centerIndex=2; // 第三张
 
 function update(){
   items.forEach((el,i)=>{
@@ -310,19 +249,7 @@ document.querySelector(".next").onclick=()=>{
   centerIndex=(centerIndex+1)%items.length;
   update();
 };
-
-/* Lightbox */
-const lightbox=document.getElementById("lightbox");
-const lbImg=lightbox.querySelector("img");
-items.forEach(i=>{
-  i.onclick=()=>{
-    lbImg.src=i.querySelector("img").src;
-    lightbox.style.display="flex";
-  }
-});
-lightbox.onclick=()=>lightbox.style.display="none";
 </script>
 
 </body>
 </html>
-
