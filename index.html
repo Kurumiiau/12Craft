@@ -12,14 +12,13 @@
   font-family: "Segoe UI", "PingFang SC", sans-serif;
 }
 
-/* 页面基础 */
 body {
   scroll-behavior: smooth;
   color: #fff;
   background: #000;
 }
 
-/* 固定导航 */
+/* ================== 导航 ================== */
 header {
   position: fixed;
   width: 100%;
@@ -45,9 +44,7 @@ header {
   color: #fff;
   text-decoration: none;
 }
-.nav a:hover {
-  text-decoration: underline;
-}
+.nav a:hover { text-decoration: underline; }
 
 /* ================== section 公共样式 ================== */
 .section {
@@ -63,7 +60,6 @@ header {
   color: #fff;
 }
 
-/* 背景层 */
 .section-background {
   position: absolute;
   inset: 0;
@@ -71,16 +67,12 @@ header {
   background-position: center;
   background-attachment: fixed;
   z-index: -1;
-  filter: brightness(0.55); /* 遮罩效果 */
+  filter: brightness(0.55);
 }
 
-/* 内容层 */
-.section-content {
-  position: relative;
-  z-index: 1;
-}
+.section-content { position: relative; z-index:1; }
 
-/* 英雄区文字 */
+/* ================== 英雄区 ================== */
 #hero h1 {
   font-size: 56px;
   text-shadow: 2px 2px 12px rgba(0,0,0,0.7);
@@ -92,8 +84,6 @@ header {
   margin: auto;
   opacity: 0.9;
 }
-
-/* 按钮 */
 .btn {
   display: inline-block;
   margin: 15px 10px 0 10px;
@@ -105,63 +95,56 @@ header {
   text-decoration: none;
   transition: 0.3s;
 }
-.btn:hover {
-  background: #1a66ff;
-  transform: translateY(-3px);
-}
+.btn:hover { background:#1a66ff; transform:translateY(-3px); }
 
-/* ================== 横向滑动画廊 ================== */
+/* ================== 中心缩放轮播 ================== */
 .carousel-container {
   position: relative;
-  overflow: hidden;
   width: 100%;
-  margin-top: 40px;
+  overflow: hidden;
+  padding: 40px 0;
+  cursor: grab;
 }
 
 .carousel {
   display: flex;
-  gap: 16px;
-  transition: transform 0.3s ease;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.5s;
 }
 
 .carousel-item {
+  flex: 0 0 auto;
+  margin: 0 10px;
+  transition: transform 0.5s, opacity 0.5s;
   position: relative;
-  flex: 0 0 auto; /* 固定宽度不收缩 */
-  width: 300px;
-  border-radius: 12px;
-  overflow: hidden;
-  cursor: pointer;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .carousel-item img {
-  width: 100%;
   display: block;
-  transition: transform 0.3s;
+  width: 220px;
+  border-radius: 12px;
+  transition: transform 0.5s;
 }
 
-.carousel-item:hover {
-  transform: scale(1.05);
-  box-shadow: 0 12px 36px rgba(0,0,0,0.6);
-}
+/* 中心缩放 */
+.carousel-item.center { transform: scale(1.2); z-index:2; }
+.carousel-item.left, .carousel-item.right { transform: scale(0.9); opacity:0.7; z-index:1; }
 
 /* 悬停文字 */
 .caption {
   position: absolute;
   bottom: 0;
-  left: 0;
   width: 100%;
-  padding: 8px;
   background: rgba(0,0,0,0.6);
   color: #fff;
   text-align: center;
   font-size: 14px;
+  padding: 6px 0;
   opacity: 0;
   transform: translateY(100%);
   transition: opacity 0.3s, transform 0.3s;
 }
-
 .carousel-item:hover .caption {
   opacity: 1;
   transform: translateY(0);
@@ -173,24 +156,19 @@ header {
   top: 50%;
   transform: translateY(-50%);
   background: rgba(0,0,0,0.6);
-  border: none;
   color: #fff;
+  border: none;
   font-size: 32px;
   padding: 8px 12px;
   cursor: pointer;
   border-radius: 8px;
   z-index: 10;
-  transition: background 0.3s;
 }
+.carousel-btn:hover { background: rgba(0,0,0,0.9); }
+.carousel-btn.prev { left: 0; }
+.carousel-btn.next { right: 0; }
 
-.carousel-btn:hover {
-  background: rgba(0,0,0,0.9);
-}
-
-.carousel-btn.prev { left: 8px; }
-.carousel-btn.next { right: 8px; }
-
-/* ================== Lightbox 弹窗 ================== */
+/* ================== Lightbox ================== */
 #lightbox {
   display:none;
   position:fixed;
@@ -201,27 +179,11 @@ header {
   z-index:1000;
   cursor:pointer;
 }
-
-#lightbox-img {
+#lightbox img {
   max-width:90%;
   max-height:90%;
   border-radius:12px;
   box-shadow:0 12px 36px rgba(0,0,0,0.7);
-  transition: transform 0.3s;
-}
-
-#lightbox.show {
-  display: flex;
-  animation: fadeIn 0.3s ease;
-}
-
-#lightbox-img.show {
-  transform: scale(1);
-}
-
-@keyframes fadeIn {
-  from {opacity:0;}
-  to {opacity:1;}
 }
 
 /* ================== 页脚 ================== */
@@ -231,17 +193,19 @@ footer {
   padding: 24px;
   font-size: 14px;
 }
+
+/* 响应式 */
+@media(max-width:768px){ .carousel-item img{width:160px;} }
 </style>
 </head>
 <body>
 
-<!-- ================== 导航 ================== -->
 <header>
   <div class="logo">12Craft</div>
   <div class="nav" id="nav"></div>
 </header>
 
-<!-- ================== 英雄区 ================== -->
+<!-- 英雄区 -->
 <section class="section" id="hero">
   <div class="section-background"></div>
   <div class="section-content">
@@ -252,42 +216,26 @@ footer {
   </div>
 </section>
 
-<!-- ================== 图片展览区（横向滑动） ================== -->
+<!-- 图片展览区 -->
 <section class="section" id="features">
   <div class="section-background"></div>
   <div class="section-content">
     <h1>我们的团队与社区活动</h1>
     <div class="carousel-container">
-      <div class="carousel">
-        <div class="carousel-item">
-          <img src="bgs/miku8.jpg" alt="Image 1">
-          <div class="caption">占位文字说明 1</div>
-        </div>
-        <div class="carousel-item">
-          <img src="https://via.placeholder.com/300x200?text=Image+2" alt="Image 2">
-          <div class="caption">占位文字说明 2</div>
-        </div>
-        <div class="carousel-item">
-          <img src="https://via.placeholder.com/300x200?text=Image+3" alt="Image 3">
-          <div class="caption">占位文字说明 3</div>
-        </div>
-        <div class="carousel-item">
-          <img src="https://via.placeholder.com/300x200?text=Image+4" alt="Image 4">
-          <div class="caption">占位文字说明 4</div>
-        </div>
-        <div class="carousel-item">
-          <img src="https://via.placeholder.com/300x200?text=Image+5" alt="Image 5">
-          <div class="caption">占位文字说明 5</div>
-        </div>
-      </div>
-      <!-- 左右箭头 -->
       <button class="carousel-btn prev">&#10094;</button>
+      <div class="carousel">
+        <div class="carousel-item"><img src="https://via.placeholder.com/300x200?text=1"><div class="caption">占位说明 1</div></div>
+        <div class="carousel-item"><img src="https://via.placeholder.com/300x200?text=2"><div class="caption">占位说明 2</div></div>
+        <div class="carousel-item"><img src="https://via.placeholder.com/300x200?text=3"><div class="caption">占位说明 3</div></div>
+        <div class="carousel-item"><img src="https://via.placeholder.com/300x200?text=4"><div class="caption">占位说明 4</div></div>
+        <div class="carousel-item"><img src="https://via.placeholder.com/300x200?text=5"><div class="caption">占位说明 5</div></div>
+      </div>
       <button class="carousel-btn next">&#10095;</button>
     </div>
   </div>
 </section>
 
-<!-- ================== 关于区 ================== -->
+<!-- 关于区 -->
 <section class="section" id="about">
   <div class="section-background"></div>
   <div class="section-content">
@@ -296,79 +244,90 @@ footer {
   </div>
 </section>
 
-<!-- ================== 页脚 ================== -->
 <footer>
-  © 2016-2026 12Craft Network· CopyRight
+  © 2016-2026 12Craft Network · CopyRight
 </footer>
 
-<!-- ================== Lightbox 弹窗 ================== -->
-<div id="lightbox">
-  <img id="lightbox-img" src="">
-</div>
+<!-- Lightbox -->
+<div id="lightbox"><img src=""></div>
 
-<!-- ================== JS ================== -->
 <script>
 /* 登录状态 */
-const nav = document.getElementById("nav");
-const isLogin = localStorage.getItem("isLogin");
-const username = localStorage.getItem("username");
-if (isLogin === "true") {
-  nav.innerHTML = `<span>欢迎，${username}</span><a href="#" onclick="logout()">退出</a>`;
-} else {
-  nav.innerHTML = `<a href="login.html">登录</a><a href="register.html">注册</a>`;
+const nav=document.getElementById("nav");
+const isLogin=localStorage.getItem("isLogin");
+const username=localStorage.getItem("username");
+if(isLogin==="true"){nav.innerHTML=`<span>欢迎，${username}</span><a href="#" onclick="logout()">退出</a>`;}
+else{nav.innerHTML=`<a href="login.html">登录</a><a href="register.html">注册</a>`;}
+function logout(){localStorage.clear();window.location.reload();}
+
+/* 英雄区随机背景 */
+const heroBackgrounds=["bgs/miku1.jpg","bgs/miku2.png","bgs/miku3.png","bgs/miku4.png","bgs/miku5.jpg","bgs/miku6.jpg","bgs/miku7.jpg","bgs/miku8.jpg"];
+document.querySelector("#hero .section-background").style.backgroundImage=`url(${heroBackgrounds[Math.floor(Math.random()*heroBackgrounds.length)]})`;
+document.querySelector("#features .section-background").style.backgroundImage="url('bgs/title1.png')";
+document.querySelector("#about .section-background").style.backgroundImage="url('bgs/title2.png')";
+
+/* 中心缩放逻辑 */
+const carousel=document.querySelector(".carousel");
+const items=document.querySelectorAll(".carousel-item");
+let centerIndex=Math.floor(items.length/2);
+
+function updateCarousel(){
+  items.forEach((item,i)=>{
+    item.classList.remove("left","center","right");
+    if(i===centerIndex)item.classList.add("center");
+    else if(i<centerIndex)item.classList.add("left");
+    else item.classList.add("right");
+  });
 }
-function logout() { localStorage.clear(); window.location.reload(); }
+updateCarousel();
 
-/* 英雄区背景随机 */
-const heroBackgrounds = [
-  "bgs/miku1.jpg",
-  "bgs/miku2.png",
-  "bgs/miku3.png",
-  "bgs/miku4.png",
-  "bgs/miku5.jpg",
-  "bgs/miku6.jpg",
-  "bgs/miku7.jpg",
-  "bgs/miku8.jpg"
-];
-document.querySelector("#hero .section-background").style.backgroundImage =
-  `url(${heroBackgrounds[Math.floor(Math.random() * heroBackgrounds.length)]})`;
-
-/* 特性区和关于区背景 */
-document.querySelector("#features .section-background").style.backgroundImage = "url('bgs/title1.png')";
-document.querySelector("#about .section-background").style.backgroundImage = "url('bgs/title2.png')";
-
-/* ================== 横向轮播按钮 ================== */
-const carousel = document.querySelector(".carousel");
-const prevBtn = document.querySelector(".carousel-btn.prev");
-const nextBtn = document.querySelector(".carousel-btn.next");
-
-prevBtn.addEventListener("click", () => {
-  carousel.scrollBy({ left: -320, behavior: "smooth" });
+/* 左右按钮 */
+document.querySelector(".carousel-btn.prev").addEventListener("click",()=>{
+  centerIndex=(centerIndex-1+items.length)%items.length;
+  updateCarousel();
+});
+document.querySelector(".carousel-btn.next").addEventListener("click",()=>{
+  centerIndex=(centerIndex+1)%items.length;
+  updateCarousel();
 });
 
-nextBtn.addEventListener("click", () => {
-  carousel.scrollBy({ left: 320, behavior: "smooth" });
-});
-
-/* ================== Lightbox ================== */
-const lightbox = document.getElementById("lightbox");
-const lightboxImg = document.getElementById("lightbox-img");
-
-document.querySelectorAll(".carousel-item img").forEach(img => {
-  img.addEventListener("click", () => {
-    lightbox.style.display = "flex";
-    lightboxImg.src = img.src;
-    setTimeout(()=>lightboxImg.classList.add("show"), 10);
+/* Lightbox */
+const lightbox=document.getElementById("lightbox");
+const lightboxImg=lightbox.querySelector("img");
+items.forEach(item=>{
+  item.addEventListener("click",()=>{
+    lightbox.style.display="flex";
+    lightboxImg.src=item.querySelector("img").src;
   });
 });
+lightbox.addEventListener("click",()=>{lightbox.style.display="none";});
 
-lightbox.addEventListener("click", () => {
-  lightboxImg.classList.remove("show");
-  setTimeout(()=>lightbox.style.display = "none",300);
+/* 鼠标拖拽 + 惯性 */
+let isDown=false, startX, scrollLeft, velocity=0, raf;
+const container=document.querySelector(".carousel-container");
+container.addEventListener("mousedown",(e)=>{
+  isDown=true;
+  startX=e.pageX-container.offsetLeft;
+  scrollLeft=carousel.scrollLeft;
+  cancelAnimationFrame(raf);
 });
-</script>
+container.addEventListener("mouseleave",()=>{isDown=false;});
+container.addEventListener("mouseup",()=>{isDown=false; inertiaScroll();});
+container.addEventListener("mousemove",(e)=>{
+  if(!isDown) return;
+  e.preventDefault();
+  const x=e.pageX-container.offsetLeft;
+  const walk=(startX-x);
+  carousel.scrollLeft=scrollLeft+walk;
+  velocity=walk;
+});
 
+function inertiaScroll(){
+  if(Math.abs(velocity)<0.5) return;
+  carousel.scrollLeft+=velocity;
+  velocity*=0.95;
+  raf=requestAnimationFrame(inertiaScroll);
+}
+</script>
 </body>
 </html>
-
-
