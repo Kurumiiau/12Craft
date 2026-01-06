@@ -216,7 +216,49 @@ footer {
   <div class="section-background"></div>
   <div class="section-content">
     <h1>欢迎来到 12Craft</h1>
-    <p>IP:12Craft.cn</p>
+    <p id="server-ip" style="cursor:pointer;">IP:12Craft.cn</p>
+
+<!-- 浮现提示文字 -->
+<div id="copy-msg" style="
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.8);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s, transform 0.4s;
+  z-index: 9999;
+">复制成功</div>
+
+<script>
+// 获取元素
+const ipText = document.getElementById("server-ip");
+const copyMsg = document.getElementById("copy-msg");
+
+ipText.addEventListener("click", () => {
+  const textToCopy = "12Craft.cn";
+
+  // 使用 Clipboard API 复制
+  navigator.clipboard.writeText(textToCopy).then(() => {
+    // 显示提示
+    copyMsg.style.opacity = "1";
+    copyMsg.style.transform = "translate(-50%, -20px)";
+
+    // 1.2秒后隐藏
+    setTimeout(() => {
+      copyMsg.style.opacity = "0";
+      copyMsg.style.transform = "translate(-50%, 0)";
+    }, 1200);
+  }).catch(err => {
+    console.error("复制失败", err);
+  });
+});
+</script>
+
     <a href="#features" class="btn">探索玩法</a>
     <a href="tencent://groupwpa/?subcmd=all&param=191174747" class="btn">加入QQ群 191174747</a>
   </div>
@@ -228,13 +270,15 @@ footer {
     <h1>特色玩法</h1>
     <div class="carousel-container">
       <div class="carousel">
-        <div class="carousel-item"><img src="bgs/I-mg1.png"><div class="caption">沉浸式冒险体验</div></div>
-        <div class="carousel-item"><img src="bgs/I-mg2.png"><div class="caption">宏大的自然生成</div></div>
-        <div class="carousel-item"><img src="bgs/I-season.png"><div class="caption">四季流转</div></div>
-        <div class="carousel-item"><img src="bgs/miku3.png"><div class="caption">社区友好</div></div>
-        <div class="carousel-item"><img src="bgs/miku8.jpg"><div class="caption">长期稳定运营</div></div>
-        <!-- 克隆第一张实现循环 -->
-        <div class="carousel-item"><img src="bgs/I-mg1.png"><div class="caption">沉浸式冒险体验</div></div>
+          <div class="carousel-item"><img src="bgs/I-mg1.png"><div class="caption">沉浸式冒险体验</div></div>
+          <div class="carousel-item"><img src="bgs/I-mg2.png"><div class="caption">宏大的自然生成</div></div>
+          <div class="carousel-item"><img src="bgs/I-season.png"><div class="caption">四季流转</div></div>
+          <div class="carousel-item"><img src="bgs/miku3.png"><div class="caption">社区友好</div></div>
+          <div class="carousel-item"><img src="bgs/miku8.jpg"><div class="caption">长期稳定运营</div></div>
+          <div class="carousel-item"><img src="bgs/I-mg1.png"><div class="caption">沉浸式冒险体验</div></div>
+          <div class="carousel-item"><img src="bgs/miku8.jpg"><div class="caption">长期稳定运营</div></div>
+          <div class="carousel-item"><img src="bgs/miku3.png"><div class="caption">长期稳定运营</div></div>
+          <div class="carousel-item"><img src="bgs/miku8.jpg"><div class="caption">长期稳定运营</div></div>
       </div>
     </div>
   </div>
@@ -266,9 +310,9 @@ if (isLogin === "true") {
 } else {
   nav.innerHTML = `<a href="login.html">登录</a><a href="register.html">注册</a>`;
 }
-function logout() { 
-  localStorage.clear(); 
-  window.location.reload(); 
+function logout() {
+  localStorage.clear();
+  window.location.reload();
 }
 
 /* 英雄区背景随机 */
@@ -321,4 +365,3 @@ lightbox.addEventListener("click", () => {
 
 </body>
 </html>
-
