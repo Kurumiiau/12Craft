@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <title>12Craft | Minecraft 多人生存服务器</title>
-<link rel="icon" type="image/png" href="bgs/favicon.png">
+<link rel="icon" href="bgs/favicon.png">
 
 <style>
 /* ================== 全局样式 ================== */
@@ -276,9 +277,8 @@ ipText.addEventListener("click", () => {
           <div class="carousel-item"><img src="bgs/miku3.png"><div class="caption">社区友好</div></div>
           <div class="carousel-item"><img src="bgs/miku8.jpg"><div class="caption">长期稳定运营</div></div>
           <div class="carousel-item"><img src="bgs/I-mg1.png"><div class="caption">沉浸式冒险体验</div></div>
-          <div class="carousel-item"><img src="bgs/miku8.jpg"><div class="caption">长期稳定运营</div></div>
-          <div class="carousel-item"><img src="bgs/miku3.png"><div class="caption">长期稳定运营</div></div>
-          <div class="carousel-item"><img src="bgs/miku8.jpg"><div class="caption">长期稳定运营</div></div>
+          <div class="carousel-item"><img src="bgs/I-mg1.png"><div class="caption">沉浸式冒险体验</div></div>
+          <div class="carousel-item"><img src="bgs/miku3.png"><div class="caption">社区友好</div></div>
       </div>
     </div>
   </div>
@@ -326,26 +326,42 @@ document.querySelector("#about .section-background").style.backgroundImage = "ur
 /* ================== 自动轮播 transform ================== */
 const carousel = document.querySelector(".carousel");
 const items = document.querySelectorAll(".carousel-item");
+
 let index = 0;
+let isResetting = false;
 const intervalTime = 3000;
+const transitionTime = 500;
 
 function autoSlide() {
+  if (isResetting) return;
+
   index++;
-  const itemWidth = items[0].offsetWidth + parseInt(getComputedStyle(items[0]).marginRight);
-  carousel.style.transition = 'transform 0.5s ease-in-out';
+  const itemWidth =
+    items[0].offsetWidth +
+    parseInt(getComputedStyle(items[0]).marginRight);
+
+  carousel.style.transition = `transform ${transitionTime}ms ease-in-out`;
   carousel.style.transform = `translateX(${-itemWidth * index}px)`;
 
-  // 到达克隆的最后一张，瞬间回到第一张
-  if(index === items.length - 1){
-    setTimeout(()=>{
-      carousel.style.transition = 'none';
-      carousel.style.transform = 'translateX(0)';
+  // 到达克隆的最后一张
+  if (index === items.length - 1) {
+    isResetting = true;
+
+    setTimeout(() => {
+      carousel.style.transition = "none";
+      carousel.style.transform = "translateX(0)";
       index = 0;
-    },500);
+
+      // 强制浏览器重绘，防止 transition 被吞
+      carousel.offsetHeight;
+
+      isResetting = false;
+    }, transitionTime);
   }
 }
 
 setInterval(autoSlide, intervalTime);
+
 
 /* ================== Lightbox 弹窗 ================== */
 const lightbox = document.getElementById("lightbox");
