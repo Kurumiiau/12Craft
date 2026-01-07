@@ -316,7 +316,7 @@ function logout() {
 }
 
 /* 英雄区背景随机 */
-const heroBackgrounds = ["bgs/miku1.jpg","bgs/miku2.png","bgs/miku3.png","bgs/miku4.png","bgs/miku5.jpg","bgs/miku6.jpg","bgs/miku7.jpg","bgs/miku8.jpg"];
+const heroBackgrounds = ["bgs/miku1.jpg","bgs/miku2.png","bgs/miku3.png","bgs/miku4.png","bgs/miku5.jpg","bgs/miku7.jpg","bgs/miku8.jpg"];
 document.querySelector("#hero .section-background").style.backgroundImage =
   `url(${heroBackgrounds[Math.floor(Math.random() * heroBackgrounds.length)]})`;
 
@@ -381,4 +381,5 @@ lightbox.addEventListener("click", () => {
 
 </body>
 </html>
+
 
