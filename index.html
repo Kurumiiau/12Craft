@@ -209,9 +209,13 @@ footer {
 <body>
 
 <header>
-  <div class="logo">12Craft</div>
+  <div class="logo" style="display:flex; align-items:center; gap:8px;">
+    <img src="bgs/favicon.png" alt="12Craft Logo" style="height:72px; width:auto;">
+    12Craft
+  </div>
   <div class="nav" id="nav"></div>
 </header>
+
 
 <section class="section" id="hero">
   <div class="section-background"></div>
@@ -234,31 +238,6 @@ footer {
   transition: opacity 0.4s, transform 0.4s;
   z-index: 9999;
 ">复制成功</div>
-
-<script>
-// 获取元素
-const ipText = document.getElementById("server-ip");
-const copyMsg = document.getElementById("copy-msg");
-
-ipText.addEventListener("click", () => {
-  const textToCopy = "12Craft.cn";
-
-  // 使用 Clipboard API 复制
-  navigator.clipboard.writeText(textToCopy).then(() => {
-    // 显示提示
-    copyMsg.style.opacity = "1";
-    copyMsg.style.transform = "translate(-50%, -20px)";
-
-    // 1.2秒后隐藏
-    setTimeout(() => {
-      copyMsg.style.opacity = "0";
-      copyMsg.style.transform = "translate(-50%, 0)";
-    }, 1200);
-  }).catch(err => {
-    console.error("复制失败", err);
-  });
-});
-</script>
 
     <a href="#features" class="btn">探索玩法</a>
     <a href="tencent://groupwpa/?subcmd=all&param=191174747" class="btn">加入QQ群 191174747</a>
@@ -285,15 +264,14 @@ ipText.addEventListener("click", () => {
 </section>
 
 <section class="section" id="about">
-  <div class="section-background"></div>
+  <div class="section-background" style="background-image: url('bgs/title2.png');"></div>
   <div class="section-content">
-    <h1>关于 12Craft</h1>
-    <p>我们致力于打造一个开放、自由、友好的 Minecraft 生存体验社区，不限制玩法，欢迎所有热爱创造与冒险的玩家加入！</p>
+    <h1 style="margin-bottom: 30px;">关于 12Craft</h1>
   </div>
 </section>
 
 <footer>
-  © 2016–2026 12Craft Network
+  © 2016-2026 12Craft Network · CopyRight
 </footer>
 
 <div id="lightbox">
@@ -301,6 +279,29 @@ ipText.addEventListener("click", () => {
 </div>
 
 <script>
+// 获取元素
+const ipText = document.getElementById("server-ip");
+const copyMsg = document.getElementById("copy-msg");
+
+ipText.addEventListener("click", () => {
+  const textToCopy = "12Craft.cn";
+
+  // 使用 Clipboard API 复制
+  navigator.clipboard.writeText(textToCopy).then(() => {
+    // 显示提示
+    copyMsg.style.opacity = "1";
+    copyMsg.style.transform = "translate(-50%, -20px)";
+
+    // 1.2秒后隐藏
+    setTimeout(() => {
+      copyMsg.style.opacity = "0";
+      copyMsg.style.transform = "translate(-50%, 0)";
+    }, 1200);
+  }).catch(err => {
+    console.error("复制失败", err);
+  });
+});
+
 /* 登录状态 */
 const nav = document.getElementById("nav");
 const isLogin = localStorage.getItem("isLogin");
@@ -316,7 +317,7 @@ function logout() {
 }
 
 /* 英雄区背景随机 */
-const heroBackgrounds = ["bgs/miku1.jpg","bgs/miku2.png","bgs/miku3.png","bgs/miku4.png","bgs/miku5.jpg","bgs/miku7.jpg","bgs/miku8.jpg"];
+const heroBackgrounds = ["bgs/miku1.jpg","bgs/miku2.png","bgs/miku3.png","bgs/miku4.png","bgs/miku5.jpg","bgs/miku6.jpg","bgs/miku7.jpg","bgs/miku8.jpg"];
 document.querySelector("#hero .section-background").style.backgroundImage =
   `url(${heroBackgrounds[Math.floor(Math.random() * heroBackgrounds.length)]})`;
 
@@ -362,7 +363,6 @@ function autoSlide() {
 
 setInterval(autoSlide, intervalTime);
 
-
 /* ================== Lightbox 弹窗 ================== */
 const lightbox = document.getElementById("lightbox");
 const lightboxImg = document.getElementById("lightbox-img");
@@ -381,5 +381,3 @@ lightbox.addEventListener("click", () => {
 
 </body>
 </html>
-
-
