@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -19,6 +18,7 @@ body {
   scroll-behavior: smooth;
   color: #fff;
   background: #000;
+  overflow-x: hidden;
 }
 
 header {
@@ -28,7 +28,7 @@ header {
   left: 0;
   padding: 15px 40px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* 确保 Logo 在左，Nav 在右 */
   align-items: center;
   background: rgba(0,0,0,0.6);
   backdrop-filter: blur(8px);
@@ -38,6 +38,9 @@ header {
 .logo {
   font-size: 26px;
   font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .nav a, .nav span {
@@ -54,12 +57,12 @@ header {
 .section {
   position: relative;
   width: 100%;
-  min-height: 80vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 80px 20px;
+  padding: 80px 0;
   overflow: hidden;
   color: #fff;
 }
@@ -77,18 +80,13 @@ header {
 .section-content {
   position: relative;
   z-index: 1;
+  width: 100%;
 }
 
 #hero h1 {
   font-size: 56px;
   text-shadow: 2px 2px 12px rgba(0,0,0,0.7);
   margin-bottom: 20px;
-}
-#hero p {
-  font-size: 18px;
-  max-width: 800px;
-  margin: auto;
-  opacity: 0.9;
 }
 
 .btn {
@@ -107,109 +105,110 @@ header {
   transform: translateY(-3px);
 }
 
-/* ================== 横向滑动画廊 ================== */
-.carousel-container {
+/* ================== 核心：居中聚焦轮播器样式 ================== */
+.carousel-wrapper {
   position: relative;
-  overflow: hidden;
   width: 100%;
+  height: 450px;
   margin-top: 40px;
 }
 
-.carousel {
-  display: flex;
-  gap: 16px;
-  transition: transform 0.5s ease-in-out;
+.carousel-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  perspective: 1200px;
 }
 
 .carousel-item {
-  position: relative;
-  flex: 0 0 auto;
-  width: clamp(250px, 30vw, 450px);
-  border-radius: 12px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 450px;
+  aspect-ratio: 16 / 9;
+  border-radius: 15px;
   overflow: hidden;
   cursor: pointer;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 0;
 }
 
 .carousel-item img {
   width: 100%;
-  display: block;
-  transition: transform 0.3s;
+  height: 100%;
+  object-fit: cover;
 }
 
-.carousel-item:hover {
-  transform: scale(1.05);
-  box-shadow: 0 12px 36px rgba(0,0,0,0.6);
+/* 中间那张的悬浮放大 + 蓝色亮光效果 */
+.carousel-item.active:hover {
+  transform: translate(-50%, -58%) scale(1.1) !important;
+  box-shadow: 0 0 45px rgba(74, 156, 255, 0.8); /* 补回蓝色亮光 */
 }
+
+/* 箭头位置锁定在屏幕两侧 */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.4);
+  color: white;
+  border: none;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 100;
+  font-size: 30px;
+  transition: 0.3s;
+  backdrop-filter: blur(8px);
+}
+.carousel-btn:hover { background: #4a9cff; }
+.prev-btn { left: 40px; }
+.next-btn { right: 40px; }
 
 .caption {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 8px;
-  background: rgba(0,0,0,0.6);
-  color: #fff;
-  text-align: center;
-  font-size: 14px;
-  opacity: 0;
-  transform: translateY(100%);
-  transition: opacity 0.3s, transform 0.3s;
+  position: absolute; bottom: 0; width: 100%; padding: 15px;
+  background: linear-gradient(transparent, rgba(0,0,0,0.9));
+  color: #fff; opacity: 0; transition: 0.3s; text-align: center;
 }
+.carousel-item.active .caption { opacity: 1; }
 
-.carousel-item:hover .caption {
-  opacity: 1;
-  transform: translateY(0);
+/* ================== 关于部分：视频框 60% 宽度 ================== */
+.video-container {
+  width: 60%; 
+  aspect-ratio: 16 / 9;
+  background: #000;
+  margin: 40px auto;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 20px rgba(74, 156, 255, 0.2);
+  border: 1px solid rgba(255,255,255,0.1);
 }
 
 /* ================== Lightbox 弹窗 ================== */
 #lightbox {
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.85);
-  justify-content:center;
-  align-items:center;
-  z-index:1000;
-  cursor:pointer;
+  display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85);
+  justify-content:center; align-items:center; z-index:1000; cursor:pointer;
 }
-
 #lightbox-img {
-  max-width:90%;
-  max-height:90%;
-  border-radius:12px;
+  max-width:90%; max-height:90%; border-radius:12px;
   box-shadow:0 12px 36px rgba(0,0,0,0.7);
-  transition: transform 0.3s;
+  transition: transform 0.3s; transform: scale(0.9);
 }
+#lightbox.show { display: flex; animation: fadeIn 0.3s ease; }
+#lightbox-img.show { transform: scale(1); }
 
-#lightbox.show {
-  display: flex;
-  animation: fadeIn 0.3s ease;
-}
+@keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
 
-#lightbox-img.show {
-  transform: scale(1);
-}
-
-@keyframes fadeIn {
-  from {opacity:0;}
-  to {opacity:1;}
-}
-
-/* ================== 页脚 ================== */
-footer {
-  background: #111;
-  text-align: center;
-  padding: 24px;
-  font-size: 14px;
-}
+footer { background: #111; text-align: center; padding: 30px; font-size: 14px; }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo" style="display:flex; align-items:center; gap:8px;">
+  <div class="logo">
     <img src="bgs/favicon.png" alt="12Craft Logo" style="height:72px; width:auto;">
     12Craft
   </div>
@@ -221,23 +220,9 @@ footer {
   <div class="section-background"></div>
   <div class="section-content">
     <h1>欢迎来到 12Craft</h1>
-    <p id="server-ip" style="cursor:pointer;">IP:12Craft.cn</p>
+    <p id="server-ip" style="cursor:pointer; font-size:20px;">IP:12Craft.cn</p>
 
-<!-- 浮现提示文字 -->
-<div id="copy-msg" style="
-  position: fixed;
-  top: 20%;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0,0,0,0.8);
-  color: #fff;
-  padding: 8px 16px;
-  border-radius: 8px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.4s, transform 0.4s;
-  z-index: 9999;
-">复制成功</div>
+    <div id="copy-msg" style="position: fixed; top: 20%; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.8); color: #fff; padding: 8px 16px; border-radius: 8px; opacity: 0; pointer-events: none; transition: 0.4s; z-index: 9999;">复制成功</div>
 
     <a href="#features" class="btn">探索玩法</a>
     <a href="tencent://groupwpa/?subcmd=all&param=191174747" class="btn">加入QQ群 191174747</a>
@@ -248,138 +233,123 @@ footer {
   <div class="section-background"></div>
   <div class="section-content">
     <h1>特色玩法</h1>
-    <div class="carousel-container">
-      <div class="carousel">
-          <div class="carousel-item"><img src="bgs/I-mg1.png"><div class="caption">沉浸式冒险体验</div></div>
-          <div class="carousel-item"><img src="bgs/I-mg2.png"><div class="caption">宏大的自然生成</div></div>
-          <div class="carousel-item"><img src="bgs/I-season.png"><div class="caption">四季流转</div></div>
-          <div class="carousel-item"><img src="bgs/miku3.png"><div class="caption">社区友好</div></div>
-          <div class="carousel-item"><img src="bgs/miku8.jpg"><div class="caption">长期稳定运营</div></div>
-          <div class="carousel-item"><img src="bgs/I-mg1.png"><div class="caption">沉浸式冒险体验</div></div>
-          <div class="carousel-item"><img src="bgs/I-mg1.png"><div class="caption">沉浸式冒险体验</div></div>
-          <div class="carousel-item"><img src="bgs/miku3.png"><div class="caption">社区友好</div></div>
+    <div class="carousel-wrapper">
+      <button class="carousel-btn prev-btn" onclick="prevSlide()">&#10094;</button>
+
+      <div class="carousel-container" id="carousel-track">
+        <div class="carousel-item"><img src="bgs/I-mg1.png"><div class="caption">沉浸式冒险体验</div></div>
+        <div class="carousel-item"><img src="bgs/I-mg2.png"><div class="caption">宏大的自然生成</div></div>
+        <div class="carousel-item"><img src="bgs/I-season.png"><div class="caption">四季流转</div></div>
+        <div class="carousel-item"><img src="bgs/miku3.png"><div class="caption">社区友好</div></div>
+        <div class="carousel-item"><img src="bgs/miku8.jpg"><div class="caption">长期稳定运营</div></div>
       </div>
+
+      <button class="carousel-btn next-btn" onclick="nextSlide()">&#10095;</button>
     </div>
   </div>
 </section>
 
 <section class="section" id="about">
-  <div class="section-background" style="background-image: url('bgs/title2.png');"></div>
+  <div class="section-background"></div>
   <div class="section-content">
-    <h1 style="margin-bottom: 30px;">关于 12Craft</h1>
+    <h1 style="font-size: 48px; text-shadow: 0 4px 15px rgba(0,0,0,0.8);">关于 12Craft</h1>
+    <div class="video-container">
+      <iframe style="width: 100%; height: 100%; border: none;" src="//player.bilibili.com/player.html?isOutside=true&aid=80433022&bvid=BV1GJ411x7h7&cid=137649199&p=1" allowfullscreen="true"></iframe>
+    </div>
+    <p style="margin-top: 30px; font-size: 18px; opacity: 0.8; max-width: 600px; margin: auto;">
+        十年匠心，稳定运营。在这里，每一个方块都承载着玩家的故事。
+    </p>
   </div>
 </section>
 
-<footer>
- © 2016–Present 12Craft Network. All Rights Reserved.
-</footer>
+<footer> © 2016–Present 12Craft Network. All Rights Reserved. </footer>
 
-<div id="lightbox">
-  <img id="lightbox-img" src="">
-</div>
+<div id="lightbox" onclick="closeLightbox()"><img id="lightbox-img" src=""></div>
 
 <script>
-// 获取元素
-const ipText = document.getElementById("server-ip");
-const copyMsg = document.getElementById("copy-msg");
-
-ipText.addEventListener("click", () => {
-  const textToCopy = "12Craft.cn";
-
-  // 使用 Clipboard API 复制
-  navigator.clipboard.writeText(textToCopy).then(() => {
-    // 显示提示
-    copyMsg.style.opacity = "1";
-    copyMsg.style.transform = "translate(-50%, -20px)";
-
-    // 1.2秒后隐藏
-    setTimeout(() => {
-      copyMsg.style.opacity = "0";
-      copyMsg.style.transform = "translate(-50%, 0)";
-    }, 1200);
-  }).catch(err => {
-    console.error("复制失败", err);
+// IP复制
+document.getElementById("server-ip").onclick = () => {
+  navigator.clipboard.writeText("12Craft.cn").then(() => {
+    const msg = document.getElementById("copy-msg");
+    msg.style.opacity = "1";
+    setTimeout(() => msg.style.opacity = "0", 1200);
   });
-});
+};
 
-/* 登录状态 */
+/* 登录状态修复 */
 const nav = document.getElementById("nav");
 const isLogin = localStorage.getItem("isLogin");
 const username = localStorage.getItem("username");
 if (isLogin === "true") {
-  nav.innerHTML = `<span>欢迎，${username}</span><a href="#" onclick="logout()">退出</a>`;
+  nav.innerHTML = `<span>欢迎，${username}</span><a href="#" onclick="localStorage.clear();location.reload();">退出</a>`;
 } else {
   nav.innerHTML = `<a href="login.html">登录</a><a href="register.html">注册</a>`;
 }
-function logout() {
-  localStorage.clear();
-  window.location.reload();
-}
 
-/* 英雄区背景随机 */
-const heroBackgrounds = ["bgs/miku1.jpg","bgs/miku2.png","bgs/miku3.png","bgs/miku4.png","bgs/miku5.jpg","bgs/miku6.jpg","bgs/miku7.jpg","bgs/miku8.jpg","bgs/miku9.png","bgs/miku10.jpg","bgs/miku11.jpg"];
-document.querySelector("#hero .section-background").style.backgroundImage =
-  `url(${heroBackgrounds[Math.floor(Math.random() * heroBackgrounds.length)]})`;
-
+/* 背景加载 */
+const heroBgs = ["bgs/miku1.jpg","bgs/miku2.png","bgs/miku3.png","bgs/miku4.png","bgs/miku5.jpg","bgs/miku7.jpg","bgs/miku8.jpg"];
+document.querySelector("#hero .section-background").style.backgroundImage = `url(${heroBgs[Math.floor(Math.random() * heroBgs.length)]})`;
 document.querySelector("#features .section-background").style.backgroundImage = "url('bgs/title1.png')";
 document.querySelector("#about .section-background").style.backgroundImage = "url('bgs/title2.png')";
 
-/* ================== 自动轮播 transform ================== */
-const carousel = document.querySelector(".carousel");
-const items = document.querySelectorAll(".carousel-item");
+/* Cover Flow 核心算法 */
+let currentIndex = 0;
+const itemsList = document.querySelectorAll('.carousel-item');
+const totalCount = itemsList.length;
 
-let index = 0;
-let isResetting = false;
-const intervalTime = 3000;
-const transitionTime = 500;
+function updateCarousel() {
+  itemsList.forEach((item, i) => {
+    let offset = i - currentIndex;
+    if (offset < -Math.floor(totalCount / 2)) offset += totalCount;
+    if (offset > Math.floor(totalCount / 2)) offset -= totalCount;
 
-function autoSlide() {
-  if (isResetting) return;
+    const absOffset = Math.abs(offset);
+    const xMove = offset * 320; 
+    const scale = 1 - absOffset * 0.2;
+    const opacity = 1 - absOffset * 0.4;
+    const zIndex = 10 - absOffset;
 
-  index++;
-  const itemWidth =
-    items[0].offsetWidth +
-    parseInt(getComputedStyle(items[0]).marginRight);
+    item.style.opacity = opacity > 0 ? 1 : 0;
+    item.style.zIndex = zIndex;
+    item.style.transform = `translate(calc(-50% + ${xMove}px), -50%) scale(${scale})`;
 
-  carousel.style.transition = `transform ${transitionTime}ms ease-in-out`;
-  carousel.style.transform = `translateX(${-itemWidth * index}px)`;
-
-  // 到达克隆的最后一张
-  if (index === items.length - 1) {
-    isResetting = true;
-
-    setTimeout(() => {
-      carousel.style.transition = "none";
-      carousel.style.transform = "translateX(0)";
-      index = 0;
-
-      // 强制浏览器重绘，防止 transition 被吞
-      carousel.offsetHeight;
-
-      isResetting = false;
-    }, transitionTime);
-  }
+    if (offset === 0) item.classList.add('active');
+    else item.classList.remove('active');
+  });
 }
 
-setInterval(autoSlide, intervalTime);
+function nextSlide() { currentIndex = (currentIndex + 1) % totalCount; updateCarousel(); }
+function prevSlide() { currentIndex = (currentIndex - 1 + totalCount) % totalCount; updateCarousel(); }
 
-/* ================== Lightbox 弹窗 ================== */
-const lightbox = document.getElementById("lightbox");
-const lightboxImg = document.getElementById("lightbox-img");
-document.querySelectorAll(".carousel-item img").forEach(img => {
-  img.addEventListener("click", () => {
-    lightbox.style.display = "flex";
-    lightboxImg.src = img.src;
-    setTimeout(()=>lightboxImg.classList.add("show"),10);
-  });
+updateCarousel();
+let autoTimer = setInterval(nextSlide, 3000);
+
+const carouselArea = document.querySelector('.carousel-wrapper');
+carouselArea.onmouseenter = () => clearInterval(autoTimer);
+carouselArea.onmouseleave = () => autoTimer = setInterval(nextSlide, 3000);
+
+itemsList.forEach((item, idx) => {
+  item.onclick = (e) => {
+    if (currentIndex !== idx) {
+      e.stopPropagation();
+      currentIndex = idx;
+      updateCarousel();
+    } else {
+      const lb = document.getElementById("lightbox");
+      const lbImg = document.getElementById("lightbox-img");
+      lb.style.display = "flex";
+      lbImg.src = item.querySelector('img').src;
+      setTimeout(()=>lbImg.classList.add("show"),10);
+    }
+  };
 });
-lightbox.addEventListener("click", () => {
-  lightboxImg.classList.remove("show");
-  setTimeout(()=>lightbox.style.display='none',300);
-});
+
+function closeLightbox() {
+  const lbImg = document.getElementById("lightbox-img");
+  lbImg.classList.remove("show");
+  setTimeout(()=>document.getElementById("lightbox").style.display='none',300);
+}
 </script>
 
 </body>
 </html>
-
-
