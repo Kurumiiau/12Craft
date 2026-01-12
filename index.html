@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<title>12Craft | Minecraft 多人生存服务器</title>
+<title>12Craft | Minecraft 国际版公益服务器</title>
 <link rel="icon" href="bgs/favicon.png">
 
 <style>
@@ -27,12 +27,11 @@ header {
   top: 0;
   left: 0;
   padding: 15px 40px;
-  display: flex;
-  justify-content: space-between; /* 确保 Logo 在左，Nav 在右 */
-  align-items: center;
   background: rgba(0,0,0,0.6);
   backdrop-filter: blur(8px);
   z-index: 100;
+  display: flex;
+  align-items: center;
 }
 
 .logo {
@@ -41,16 +40,6 @@ header {
   display: flex;
   align-items: center;
   gap: 8px;
-}
-
-.nav a, .nav span {
-  margin-left: 20px;
-  font-size: 15px;
-  color: #fff;
-  text-decoration: none;
-}
-.nav a:hover {
-  text-decoration: underline;
 }
 
 /* ================== section 公共样式 ================== */
@@ -88,6 +77,152 @@ header {
   text-shadow: 2px 2px 12px rgba(0,0,0,0.7);
   margin-bottom: 20px;
 }
+
+.navs {
+  font-size: 18px;
+  color: #C0D9D9;
+  cursor: pointer;
+  text-decoration: none;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 32px;
+}
+.navs a,
+.navs a:visited {
+  font-size: 18px;
+  color: #C0D9D9;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.navs a:hover {
+  color: #ffffff;
+}
+
+.navs a.active {
+    color: #ffffff;           /* 高亮颜色 */
+    border-bottom: 2px solid #C0D9D9;  /* 可选下划线效果 */
+}
+
+/* ===== 下拉容器 ===== */
+.dropdown {
+  position: relative;
+}
+
+/* 按钮 */
+.dropbtn {
+  font-size: 22px;
+  color: #C0D9D9;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.dropbtn:hover {
+  color: #fff;
+}
+
+/* ===== 下拉菜单（默认隐藏，但不 display:none） ===== */
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-10px);
+
+  min-width: 160px;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  padding: 8px 0;
+
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    visibility 0.2s ease;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  z-index: 999;
+}
+
+/* ===== dropdown 容器（关键） ===== */
+.dropdown {
+  position: relative;
+
+}
+
+/* 按钮 */
+.dropbtn {
+  font-size: 18px;
+  color: #C0D9D9;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.dropbtn:hover {
+  color: #fff;
+}
+
+/* ===== 下拉菜单 ===== */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;              /* 不再 +12px */
+  left: 50%;
+  transform: translateX(-50%) translateY(-10px);
+
+  min-width: 160px;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  padding: 8px 0;
+
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  z-index: 999;
+}
+
+/* 下拉项 */
+.dropdown-menu a {
+  padding: 10px 18px;
+  font-size: 16px;
+  color: #C0D9D9;
+  text-decoration: none;
+}
+
+.dropdown-menu a:hover {
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+}
+
+/* ===== hover 触发 ===== */
+.dropdown:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+
 
 .btn {
   display: inline-block;
@@ -207,13 +342,26 @@ footer { background: #111; text-align: center; padding: 30px; font-size: 14px; }
 </head>
 <body>
 
-<header>
+<header class="header">
   <div class="logo">
     <img src="bgs/favicon.png" alt="12Craft Logo" style="height:72px; width:auto;">
-    12Craft
+    <span class="title">12Craft</span>
+    <nav class="navs">
+        <a onclick="scrollToTop()" class="active">首页 | Home</a>
+        <a href="Play.html">游玩 | Play</a>
+        <a href="Donate.html">赞助 | Donate</a>
+          <div class="dropdown">
+    <span class="dropbtn">更多 | More</span>
+    <div class="dropdown-menu">
+      <a href="News.html">公告 | News</a>
+      <a href="Bans.html">小黑屋 | Ban List</a>
+      <a href="Help.html">玩法帮助 | Help</a>
+    </div>
   </div>
-  <div class="nav" id="nav"></div>
+</nav>
+  </div>
 </header>
+
 
 
 <section class="section" id="hero">
@@ -240,8 +388,7 @@ footer { background: #111; text-align: center; padding: 30px; font-size: 14px; }
         <div class="carousel-item"><img src="bgs/I-mg1.png"><div class="caption">沉浸式冒险体验</div></div>
         <div class="carousel-item"><img src="bgs/I-mg2.png"><div class="caption">宏大的自然生成</div></div>
         <div class="carousel-item"><img src="bgs/I-season.png"><div class="caption">四季流转</div></div>
-        <div class="carousel-item"><img src="bgs/miku3.png"><div class="caption">社区友好</div></div>
-        <div class="carousel-item"><img src="bgs/miku8.jpg"><div class="caption">长期稳定运营</div></div>
+        <div class="carousel-item"><img src="bgs/Enchants.gif"><div class="caption">数十种附魔属性</div></div>
       </div>
 
       <button class="carousel-btn next-btn" onclick="nextSlide()">&#10095;</button>
@@ -267,6 +414,15 @@ footer { background: #111; text-align: center; padding: 30px; font-size: 14px; }
 <div id="lightbox" onclick="closeLightbox()"><img id="lightbox-img" src=""></div>
 
 <script>
+
+// 滚动首页
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
 // IP复制
 document.getElementById("server-ip").onclick = () => {
   navigator.clipboard.writeText("12Craft.cn").then(() => {
@@ -276,18 +432,8 @@ document.getElementById("server-ip").onclick = () => {
   });
 };
 
-/* 登录状态修复 */
-const nav = document.getElementById("nav");
-const isLogin = localStorage.getItem("isLogin");
-const username = localStorage.getItem("username");
-if (isLogin === "true") {
-  nav.innerHTML = `<span>欢迎，${username}</span><a href="#" onclick="localStorage.clear();location.reload();">退出</a>`;
-} else {
-  nav.innerHTML = `<a href="login.html">登录</a><a href="register.html">注册</a>`;
-}
-
 /* 背景加载 */
-const heroBgs = ["bgs/miku1.jpg","bgs/miku2.png","bgs/miku3.png","bgs/miku4.png","bgs/miku5.jpg","bgs/miku7.jpg","bgs/miku8.jpg"];
+const heroBgs = ["bgs/miku1.jpg","bgs/miku2.png","bgs/miku3.png","bgs/miku4.png","bgs/miku5.jpg","bgs/miku7.jpg","bgs/miku8.jpg","bgs/miku9.png","bgs/miku10.jpg","bgs/miku11.jpg"];
 document.querySelector("#hero .section-background").style.backgroundImage = `url(${heroBgs[Math.floor(Math.random() * heroBgs.length)]})`;
 document.querySelector("#features .section-background").style.backgroundImage = "url('bgs/title1.png')";
 document.querySelector("#about .section-background").style.backgroundImage = "url('bgs/title2.png')";
